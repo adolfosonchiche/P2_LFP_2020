@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\elektra\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\elektra\\.nuget\\packages"
+    ]
+  }
+}
