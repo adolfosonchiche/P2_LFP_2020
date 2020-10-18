@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 using System.Windows;
 namespace P1_LENGUAJES_FP
 {
-class Archivo
-{
+    class Archivo
+    {
 
-/* declaracion de variables*/
+        /* declaracion de variables*/
         private String pat = "";
         protected String nuevoPat = "";
-        protected String pathProyecto = "";
+        protected static String pathProyecto = "";
+        protected String[] listaArchivos;
 
         /* Metodo para guardar un archivo nuevo o crear un archivo
          *tambien para guardar archivos ya creados*/
-        public void guardarDocumeto(string mensaje)
+        public void guardarDocumeto(string mensaje, ListBox archivosProyecto)
         {
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "gt files (*.gt)|*.gt";
@@ -30,7 +31,6 @@ class Archivo
             {
                 try
                 {
-
                     if (saveFile.ShowDialog() == DialogResult.OK)
                     {
                         if (File.Exists(saveFile.FileName))
@@ -39,14 +39,21 @@ class Archivo
                             StreamWriter texto = File.CreateText(pat);
                             texto.Write(mensaje + "\n");
                             texto.Close();
-
                         }
+
                         else
                         {
                             pat = saveFile.FileName;
                             StreamWriter texto = File.CreateText(pat);
                             texto.Write(mensaje);
                             texto.Close();
+                        }
+
+                        if (pathProyecto.Equals(""))
+                        {
+                            archivosProyecto.Items.Clear();
+                            string[] archivo = pat.Split("\\");
+                            archivosProyecto.Items.Add(archivo[archivo.Length - 1]);
                         }
                         MessageBox.Show("Archivo creado.", "Guardar archivo");
                     }
@@ -62,7 +69,6 @@ class Archivo
                     MessageBox.Show("Error en guardar el archivo.", "Guardar archivo");
                     pat = nuevoPat;
                 }
-
             }
             else
             {
@@ -81,7 +87,7 @@ class Archivo
         }
 
         /* Metodo para abrir un archivo*/
-        public void abrirDocumetno(RichTextBox txt_ingreso, RichTextBox salidaError)
+        public void abrirDocumetno(RichTextBox txt_ingreso, RichTextBox salidaError, ListBox archivosProyecto)
         {
             String resultado = "";
             OpenFileDialog openFile = new OpenFileDialog();
@@ -97,6 +103,9 @@ class Archivo
                 txt_ingreso.Clear();
                 txt_ingreso.AppendText(resultado);
                 salidaError.Clear();
+                archivosProyecto.Items.Clear();
+                string[] archivo = pat.Split("\\");
+                archivosProyecto.Items.Add(archivo[archivo.Length - 1]);
                 MessageBox.Show("Archivo leido correctamente.", "Abrir archivo");
 
             }
@@ -109,7 +118,7 @@ class Archivo
         /* Metodo para preguntar al usuario y guardar su seleccion
          * si desea guradar el archivo antes de cerrarlo */
         public void mensajeGuardar(String texto, String mensaje,
-            RichTextBox txtIngresoCodigo, RichTextBox txtError)
+            RichTextBox txtIngresoCodigo, RichTextBox txtError, ListBox archivosProyecto)
         {
             string message = "Deseas guardar el documento.!";
             string caption = texto;
@@ -119,7 +128,7 @@ class Archivo
 
             if (result == DialogResult.Yes)
             {
-                guardarDocumeto(mensaje);
+                guardarDocumeto(mensaje, archivosProyecto);
                 txtIngresoCodigo.Clear();
                 txtError.Clear();
                 mensaje = "";
@@ -135,7 +144,7 @@ class Archivo
 
             if (texto.Equals("Nuevo documento") && result != DialogResult.Cancel)
             {
-                guardarDocumeto("");
+                guardarDocumeto("", archivosProyecto);
             }
         }
 
@@ -224,27 +233,19 @@ class Archivo
         /* Metodo para obtener el path de un proyecto*/
         public void obtenerPathProyecto()
         {
-
             try
             {
-
-            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+                FolderBrowserDialog folderDialog = new FolderBrowserDialog();
                 folderDialog.ShowNewFolderButton = true;
-            // Muestra el FolderBrowserDialog. 
-            DialogResult result = folderDialog.ShowDialog();
-                  
-            if (result == DialogResult.OK)
-            {
-                 pathProyecto = folderDialog.SelectedPath;
-                //Use folder path
-            }
-            else
-            {
-                    //Operation aborted by the user
-                    MessageBox.Show("proyecto leido correctamente.", "Abrir Proyecto");
-                }
 
-                
+                // Muestra el FolderBrowserDialog. 
+                DialogResult result = folderDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    pathProyecto = folderDialog.SelectedPath;
+                    //Use folder path
+                }
 
             }
             catch (Exception)
@@ -253,25 +254,50 @@ class Archivo
             }
         }
 
-        public void obtenerArchivoProyecto(ListBox archivosProyecto)
+        /*metodo para obtener todo los archivos en la carpeta 
+         del proyecto seleccionado y lo imprime en una lista box*/
+        public void obtenerArchivoProyecto(ListBox archivosProyecto, Label lbProyect)
         {
             if (!pathProyecto.Equals(""))
             {
-                String[] listaArchivos = Directory.GetFiles(pathProyecto);
+                listaArchivos = Directory.GetFiles(pathProyecto);
+                archivosProyecto.Items.Clear();
                 int a = 0;
                 foreach (var sfile in listaArchivos)
                 {
-                    
-                    string [] archivo = sfile.Split("\\");
+
+                    string[] archivo = sfile.Split("\\");
                     if (a == 0)
                     {
-                        archivosProyecto.Items.Add("PROYECTO: " + archivo[archivo.Length-2]);
+                        lbProyect.Text = archivo[archivo.Length - 2];
                     }
                     archivosProyecto.Items.Add("  " + archivo[archivo.Length - 1]);
                     a++;
                 }
             }
-            
+        }
+
+        /* Metodo para obtener el texto de un archivo*/
+        public void abrirArchivoDeProyecto(RichTextBox txt_ingreso, RichTextBox salidaError, String _pt)
+        {
+            String resultado = "";
+            String nuevoPt = pathProyecto + "\\" + _pt.Trim();
+
+            try
+            {
+                if (nuevoPt != null)
+                {
+                    pat = nuevoPt;
+                    resultado = File.ReadAllText(nuevoPt);
+                    txt_ingreso.Clear();
+                    txt_ingreso.AppendText(resultado);
+                    salidaError.Clear();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error en leer el archivo.\n", "Abrir archivo");
+            }
         }
     }
 

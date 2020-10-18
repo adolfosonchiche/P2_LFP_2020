@@ -40,7 +40,7 @@ namespace P1_LENGUAJES_FP
         /*funcionalidad metodo del menu abrir archivo*/
         private void itemAbrir_Click(object sender, EventArgs e)
         {
-            archivo.abrirDocumetno(txtIngresoCodigo, txtSalidaError);
+            archivo.abrirDocumetno(txtIngresoCodigo, txtSalidaError, lboxArchivosProyecto);
         }
 
         /*funcionalidad metodo del menu guardar como (otro archivo nuevo) */
@@ -48,7 +48,7 @@ namespace P1_LENGUAJES_FP
         {
             obtenerTextoRichText();
             archivo.nuevoGuardar();
-            archivo.guardarDocumeto(mensaje);
+            archivo.guardarDocumeto(mensaje, lboxArchivosProyecto);
         }
 
         /*funcionalidad metodo del salir (cerrar programa)*/
@@ -69,7 +69,7 @@ namespace P1_LENGUAJES_FP
         private void menuGuardar_Click(object sender, EventArgs e)
         {
             obtenerTextoRichText();
-            archivo.guardarDocumeto(mensaje);
+            archivo.guardarDocumeto(mensaje, lboxArchivosProyecto);
         }
 
         /*funcionalidad metodo del menu crear un nuevo archivo*/
@@ -78,13 +78,15 @@ namespace P1_LENGUAJES_FP
             obtenerTextoRichText();
             if (archivo.getPat().Equals("") && mensaje.Equals(""))
             {
-                archivo.guardarDocumeto(mensaje);
+                archivo.guardarDocumeto(mensaje, lboxArchivosProyecto);
                 txtSalidaError.Clear();
                 txtIngresoCodigo.Clear();
+                archivo.obtenerArchivoProyecto(lboxArchivosProyecto, lblProyecto);
             }
             else
             {
-                archivo.mensajeGuardar("Nuevo documento", mensaje, txtIngresoCodigo, txtSalidaError);
+                archivo.mensajeGuardar("Nuevo documento", mensaje, txtIngresoCodigo, txtSalidaError, lboxArchivosProyecto);
+                archivo.obtenerArchivoProyecto(lboxArchivosProyecto, lblProyecto);
             }
         }
 
@@ -101,7 +103,7 @@ namespace P1_LENGUAJES_FP
             }
             else
             {
-                archivo.mensajeGuardar("Cerrar documento", mensaje, txtIngresoCodigo, txtSalidaError);
+                archivo.mensajeGuardar("Cerrar documento", mensaje, txtIngresoCodigo, txtSalidaError, lboxArchivosProyecto);
             }
         }
 
@@ -161,7 +163,14 @@ namespace P1_LENGUAJES_FP
         private void itemProyecto_Click(object sender, EventArgs e)
         {
             archivo.obtenerPathProyecto();
-            archivo.obtenerArchivoProyecto(lboxArchivosProyecto);
+            archivo.obtenerArchivoProyecto(lboxArchivosProyecto, lblProyecto);
+        }
+
+        private void lboxArchivosProyecto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get the currently selected item in the ListBox.
+            string curItem = lboxArchivosProyecto.SelectedItem.ToString();
+            archivo.abrirArchivoDeProyecto(txtIngresoCodigo, txtSalidaError, curItem);
         }
     }
 }

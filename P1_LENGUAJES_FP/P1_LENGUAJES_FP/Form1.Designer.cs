@@ -46,6 +46,8 @@
             this.labelFila = new System.Windows.Forms.Label();
             this.labelColumna = new System.Windows.Forms.Label();
             this.lboxArchivosProyecto = new System.Windows.Forms.ListBox();
+            this.lblLogoProyecto = new System.Windows.Forms.Label();
+            this.lblProyecto = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,8 +141,8 @@
             // menuCrearNuevo
             // 
             this.menuCrearNuevo.Name = "menuCrearNuevo";
-            this.menuCrearNuevo.Size = new System.Drawing.Size(85, 20);
-            this.menuCrearNuevo.Text = "Crear Nuevo";
+            this.menuCrearNuevo.Size = new System.Drawing.Size(151, 20);
+            this.menuCrearNuevo.Text = "Crear Nuevo Documento";
             this.menuCrearNuevo.Click += new System.EventHandler(this.menuCrearNuevo_Click);
             // 
             // menuCerrar
@@ -198,14 +200,38 @@
             this.lboxArchivosProyecto.ItemHeight = 15;
             this.lboxArchivosProyecto.Location = new System.Drawing.Point(971, 68);
             this.lboxArchivosProyecto.Name = "lboxArchivosProyecto";
-            this.lboxArchivosProyecto.Size = new System.Drawing.Size(191, 349);
+            this.lboxArchivosProyecto.Size = new System.Drawing.Size(171, 334);
             this.lboxArchivosProyecto.TabIndex = 7;
+            this.lboxArchivosProyecto.SelectedIndexChanged += new System.EventHandler(this.lboxArchivosProyecto_SelectedIndexChanged);
+            // 
+            // lblLogoProyecto
+            // 
+            this.lblLogoProyecto.AutoSize = true;
+            this.lblLogoProyecto.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.lblLogoProyecto.Location = new System.Drawing.Point(971, 24);
+            this.lblLogoProyecto.Name = "lblLogoProyecto";
+            this.lblLogoProyecto.Size = new System.Drawing.Size(181, 17);
+            this.lblLogoProyecto.TabIndex = 8;
+            this.lblLogoProyecto.Text = "EXPLORADOR DE ARCHIVOS";
+            this.lblLogoProyecto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblProyecto
+            // 
+            this.lblProyecto.AutoSize = true;
+            this.lblProyecto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblProyecto.Location = new System.Drawing.Point(980, 40);
+            this.lblProyecto.Name = "lblProyecto";
+            this.lblProyecto.Size = new System.Drawing.Size(0, 17);
+            this.lblProyecto.TabIndex = 9;
+            this.lblProyecto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1174, 749);
+            this.ClientSize = new System.Drawing.Size(1174, 657);
+            this.Controls.Add(this.lblProyecto);
+            this.Controls.Add(this.lblLogoProyecto);
             this.Controls.Add(this.lboxArchivosProyecto);
             this.Controls.Add(this.labelColumna);
             this.Controls.Add(this.labelFila);
@@ -243,6 +269,8 @@
         private System.Windows.Forms.Label labelColumna;
         private System.Windows.Forms.ToolStripMenuItem itemProyecto;
         private System.Windows.Forms.ListBox lboxArchivosProyecto;
+        private System.Windows.Forms.Label lblLogoProyecto;
+        private System.Windows.Forms.Label lblProyecto;
     }
 }
 
