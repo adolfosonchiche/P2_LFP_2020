@@ -4,17 +4,20 @@ using System.Text;
 
 namespace P1_LENGUAJES_FP
 {
-    class AnalizadorSintactico
+    class AnalizadorSintactico : ConstantesUse
     {
         protected String lexema;
         protected String tipo;
         protected int fila;
         protected int columna;
         protected static Pila pila;
+        protected String ultimoValor = "";
+
 
         public AnalizadorSintactico()
         {
             pila = new Pila();
+            pila.InsertarNodo(E);
         }
 
         public void obtenerLexema(String lexema, String tipo, int fila, int columna)
@@ -27,15 +30,18 @@ namespace P1_LENGUAJES_FP
 
         public void analizarLexema()
         {
-            String ultimoValor = pila.MostrarUltimoValorIngresado();
-
+            if (!pila.PilaVacia())
+            {
+                ultimoValor = pila.MostrarUltimoValorIngresado();
+            }
+            
             if (ultimoValor.Equals(lexema))
             {
                 pila.EliminarNodo();
             }
             else
             {
-                if (ultimoValor.Equals("E"))
+                if (ultimoValor.Equals(E))
                 {
 
                 }

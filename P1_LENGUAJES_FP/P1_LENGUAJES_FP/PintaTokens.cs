@@ -6,12 +6,11 @@ using System.Windows.Forms;
 
 namespace P1_LENGUAJES_FP
 {
-    class PintaTokens
+    class PintaTokens : ConstantesUse
     {
         /*declaracion de variables*/
-        private static List<String> textoReservado = new List<String>(new String[] {"entero", "decimal", "cadena", "booleano",
-            "caracter", "SI", "SINO", "SINO_SI", "MIENTRAS", "HACER", "DESDE", "HASTA", "INCREMENTO",
-            "verdadero", "falso"});
+        private static List<String> textoReservado = new List<String>(new String[] {entero, numDecimal, cadena, booleano, caracter, si, sino, sino_si, mientras, hacer, desde, hasta, incremento,
+            verdadero, falso});
 
         string[] signosOperadores = new string[] {"+", "-", "*", "++", "--", "/", "<", ">",
            "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";"};
