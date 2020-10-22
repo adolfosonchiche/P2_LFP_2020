@@ -269,7 +269,7 @@ namespace P1_LENGUAJES_FP
                     string[] archivo = sfile.Split("\\");
                     if (a == 0)
                     {
-                        lbProyect.Text = archivo[archivo.Length - 2];
+                        lbProyect.Text = "Proyecto: " + archivo[archivo.Length - 2];
                     }
                     archivosProyecto.Items.Add("  " + archivo[archivo.Length - 1]);
                     a++;
@@ -300,5 +300,5 @@ namespace P1_LENGUAJES_FP
             }
         }
     }
-
+    
 }

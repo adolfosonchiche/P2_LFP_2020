@@ -31,6 +31,10 @@ namespace P1_LENGUAJES_FP
             }
             else 
             {
+                if (tok.Equals("_"))
+                {
+                    idToken = true;
+                }
                 errorToken = false;
                 return 3;
             }

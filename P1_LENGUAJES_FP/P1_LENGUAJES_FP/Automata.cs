@@ -14,7 +14,7 @@ namespace P1_LENGUAJES_FP
         private EstadoNoAceptacion noAceptacion;
         protected static int estado = 0;
         protected static int puntoEstadoB = 0;
-        private static int tipoToken = 0;
+        protected static int tipoToken = 0;
         protected static int cadCom = 0;
         protected Boolean moverToken = false;
         protected static Boolean errorToken = false;
@@ -22,8 +22,10 @@ namespace P1_LENGUAJES_FP
         protected string comentar = "";
         protected PintaTokens pintaT;
         protected String tok = "";
+        protected static Boolean idToken = false;
         private string[] signosOperadores = new string[] {"+", "-", "++", "--", "<", ">",
            "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";", ",", "*"};
+        private AnalizadorSintactico sintactico;
 
         /*metodo para instanciar algunas variables*/
         public void iniciarVaiables(PintaTokens pintar)
@@ -31,6 +33,7 @@ namespace P1_LENGUAJES_FP
             aceptacion = new EstadoAceptacion();
             noAceptacion = new EstadoNoAceptacion();
             this.pintaT = pintar;
+            sintactico = new AnalizadorSintactico();
         }
 
         /*metodo para obtener el movimineto en los estados 
@@ -69,7 +72,7 @@ namespace P1_LENGUAJES_FP
                 moverToken = true;
             }
             /*sentencia para movernos en los estados*/
-            if (moverToken == true) //si se mueve entra aqui
+            if (moverToken) //si se mueve entra aqui
             {
                 //verificar si el usuario teclo  borra un caracter (token)
                 try {
@@ -91,9 +94,9 @@ namespace P1_LENGUAJES_FP
 
                 switch (estado) //verificamos el estado en el que nos encontramos y mandamos el token
                 {
-                    /*cada estado nos devuelve un nuevo estado segun sea el token*/
-                    /*estado A = 0, estdo B = 1, estado C = 2, estado D = 3, estado E = 4, estado F = 5
-                    * estado G = 6, estdo H = 7, estado I = 8, estado J = 9, estado K = 10, estado L = 11*/
+                    /* cada estado nos devuelve un nuevo estado segun sea el token
+                    * estado A = 0, estdo B = 1, estado C = 2, estado D = 3, estado E = 4, estado F = 5
+                    * estado G = 6, estdo H = 7, estado I = 8, estado J = 9, estado K = 10, estado L = 11 */
                     case 0:
                         estado = noAceptacion.estadoA(token);
                         break;
@@ -143,7 +146,7 @@ namespace P1_LENGUAJES_FP
                         break;
 
                     default:
-
+                        estado = 0;
                         break;
                 }
             }
@@ -160,7 +163,7 @@ namespace P1_LENGUAJES_FP
                         break;
                     }
                 }
-                if (token.Equals('\r') && tokens.Equals(""))
+                if (token.Equals('\r') && tokens.Equals("") || tokens.Equals("") || tokens.Equals(""))
                 {
                     errorToken = false;
                 }
@@ -203,14 +206,15 @@ namespace P1_LENGUAJES_FP
                         tipoToken = 4;
                     }
                 }
+
                 /*iniciamos el estado, y el token para ingresar uno nuevo*/
                 tokens = "";
-                estado = 0;
+                estado = 0;   
                 puntoEstadoB = 0;
                 errorToken = false;
+                idToken = false;
 
             }            
-
         }
       
     }

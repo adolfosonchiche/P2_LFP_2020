@@ -41,6 +41,11 @@ namespace P1_LENGUAJES_FP
                 errorToken = false;
                 return 0;
             }
+            else if (idToken)
+            {
+                errorToken = false;
+                return 3;
+            }
             else
             {
                 errorToken = true;
