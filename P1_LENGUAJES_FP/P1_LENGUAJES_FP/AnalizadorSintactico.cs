@@ -12,12 +12,16 @@ namespace P1_LENGUAJES_FP
         protected int columna;
         protected static Pila pila;
         protected String ultimoValor = "";
+        protected Boolean errorLexema = false;
+        protected String mensajeErrorLexema = "";
+        TablaTrasicionSintactico tablaSintactico;
 
 
         public AnalizadorSintactico()
         {
             pila = new Pila();
             pila.InsertarNodo(E);
+            tablaSintactico = new TablaTrasicionSintactico();
         }
 
         public void obtenerLexema(String lexema, String tipo, int fila, int columna)
@@ -42,6 +46,10 @@ namespace P1_LENGUAJES_FP
             else
             {
                 if (ultimoValor.Equals(E))
+                {
+                    tablaSintactico.ejecutarProduccionE(lexema, tipo, fila, columna);
+                }
+                else if (ultimoValor.Equals(N))
                 {
 
                 }

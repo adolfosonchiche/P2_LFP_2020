@@ -23,6 +23,7 @@ namespace P1_LENGUAJES_FP
         public const String J = "PJ";
         public const String L = "PL";
         public const String LL = "PL'";
+        public const String LLL = "PL''";
         public const String M = "PM";
         public const String MM = "PM'";
         public const String MMM = "PM''";
@@ -65,6 +66,7 @@ namespace P1_LENGUAJES_FP
         public const String hasta = "HASTA";
         public const String incremento = "INCREMENTO";
         public const String principal = "principal";
-
+        public const String escribir = "escribir";
+        public const String leer = "leer";
     }
 }
