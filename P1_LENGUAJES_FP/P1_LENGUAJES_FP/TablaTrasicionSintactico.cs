@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Transactions;
 
 namespace P1_LENGUAJES_FP
 {
     class TablaTrasicionSintactico : AnalizadorSintactico
     {
+        public TablaTrasicionSintactico()
+        {
+            
+        }
 
-        public void ejecutarProduccionE(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionE()
         {
             if (lexema.Equals(principal))
             {
@@ -22,7 +27,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionN(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionN()
         {
             if (lexema.Equals("}"))
             {
@@ -31,17 +36,17 @@ namespace P1_LENGUAJES_FP
             else if (lexema.Equals(desde) || lexema.Equals(hacer) || lexema.Equals(mientras)
                 || lexema.Equals(si))
             {
-                ejecutarProduccionD(lexema, tipo, fila, columna);
+                ejecutarProduccionD();
             }
             else if(lexema.Equals(entero) || lexema.Equals(numDecimal)
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir)
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                ejecutarProduccionR(lexema, tipo, fila, columna);
+                ejecutarProduccionR();
             } 
             else if (tipo.Equals("id"))
             {
-
+                ejecutarProduccionO();
             }
             else
             {
@@ -49,7 +54,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionD(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionD()
         {
             if (lexema.Equals(desde))
             {
@@ -83,7 +88,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionR(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionR()
         {
             if (lexema.Equals(entero))
             {
@@ -119,7 +124,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionA(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionA()
         {
             if (tipo.Equals("id"))
             {
@@ -141,7 +146,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionB(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionB()
         {
             if (lexema.Equals("}"))
             {
@@ -157,7 +162,7 @@ namespace P1_LENGUAJES_FP
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir) || tipo.Equals("id")
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                ejecutarProduccionN(lexema, tipo, fila, columna);
+                ejecutarProduccionN();
             }
             else
             {
@@ -165,7 +170,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionC(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionC()
         {
             if (lexema.Equals("}"))
             {
@@ -176,7 +181,7 @@ namespace P1_LENGUAJES_FP
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir) || tipo.Equals("id")
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                ejecutarProduccionN(lexema, tipo, fila, columna);
+                ejecutarProduccionN();
             }
             else
             {
@@ -184,7 +189,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionF(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionF()
         {
             if (lexema.Equals("}"))
             {
@@ -196,7 +201,7 @@ namespace P1_LENGUAJES_FP
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir) || tipo.Equals("id")
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                ejecutarProduccionN(lexema, tipo, fila, columna);
+                ejecutarProduccionN();
             }
             else
             {
@@ -204,21 +209,21 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionFF(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionFF()
         {
             if (lexema.Equals(sino) || lexema.Equals(sino_si))
             {
                 pila.EliminarNodo();
-                ejecutarProduccionH(lexema, tipo, fila, columna);
+                ejecutarProduccionH();
             }
             else 
             {
                 pila.EliminarNodo();
-                ejecutarProduccionN(lexema, tipo, fila, columna);
+                ejecutarProduccionN();
             }
         }
 
-        public void ejecutarProduccionH(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionH()
         {
             if (lexema.Equals(sino))
             {
@@ -239,7 +244,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionI(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionI()
         {
             if (lexema.Equals("}"))
             {
@@ -251,7 +256,7 @@ namespace P1_LENGUAJES_FP
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir) || tipo.Equals("id")
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                ejecutarProduccionN(lexema, tipo, fila, columna);
+                ejecutarProduccionN();
             }
             else
             {
@@ -259,7 +264,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionJ(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionJ()
         {
             if (lexema.Equals("}"))
             {
@@ -270,7 +275,7 @@ namespace P1_LENGUAJES_FP
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir) || tipo.Equals("id")
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                ejecutarProduccionN(lexema, tipo, fila, columna);
+                ejecutarProduccionN();
             }
             else
             {
@@ -278,7 +283,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionL(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionL()
         {
             if (tipo.Equals("id"))
             {
@@ -291,11 +296,11 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionLL(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionLL()
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                ejecutarProduccionLLL(lexema, tipo, fila, columna);
+                ejecutarProduccionLLL();
             }
             else if (lexema.Equals("="))
             {
@@ -309,7 +314,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionLLL(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionLLL()
         {
             if (lexema.Equals(","))
             {
@@ -326,7 +331,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionM(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionM()
         {
             if (tipo.Equals("id"))
             {
@@ -339,11 +344,11 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionMM(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionMM()
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                ejecutarProduccionMMM(lexema, tipo, fila, columna);
+                ejecutarProduccionMMM();
             }
             else if (lexema.Equals("="))
             {
@@ -357,7 +362,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionMMM(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionMMM()
         {
             if (lexema.Equals(","))
             {
@@ -374,7 +379,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionU(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionU()
         {
             if (tipo.Equals("id"))
             {
@@ -387,11 +392,11 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionUU(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionUU()
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                ejecutarProduccionUUU(lexema, tipo, fila, columna);
+                ejecutarProduccionUUU();
             }
             else if (lexema.Equals("="))
             {
@@ -405,7 +410,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionUUU(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionUUU()
         {
             if (lexema.Equals(","))
             {
@@ -422,7 +427,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionP(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionP()
         {
             if (tipo.Equals("id"))
             {
@@ -435,11 +440,11 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionPP(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionPP()
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                ejecutarProduccionPPP(lexema, tipo, fila, columna);
+                ejecutarProduccionPPP();
             }
             else if (lexema.Equals("="))
             {
@@ -453,7 +458,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionPPP(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionPPP()
         {
             if (lexema.Equals(","))
             {
@@ -470,7 +475,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionQ(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionQ()
         {
             if (tipo.Equals("id"))
             {
@@ -483,11 +488,11 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionQQ(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionQQ()
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                ejecutarProduccionQQQ(lexema, tipo, fila, columna);
+                ejecutarProduccionQQQ();
             }
             else if (lexema.Equals("="))
             {
@@ -501,7 +506,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionQQQ(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionQQQ()
         {
             if (lexema.Equals(","))
             {
@@ -518,7 +523,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionV(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionV()
         {
             if (lexema.Equals(verdadero) || lexema.Equals(falso))
             {
@@ -530,7 +535,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionS(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionS()
         {
             if (lexema.Equals("("))
             {
@@ -545,7 +550,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionT(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionT()
         {
             if (lexema.Equals("("))
             {
@@ -561,7 +566,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionTT(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionTT()
         {
             if (tipo.Equals("id") || tipo.Equals("n") || tipo.Equals("ct"))
             {
@@ -573,7 +578,7 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionW(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionW()
         {
             if (lexema.Equals(")"))
             {
@@ -590,12 +595,164 @@ namespace P1_LENGUAJES_FP
             }
         }
 
-        public void ejecutarProduccionO(String lexema, String tipo, int fila, int columna)
+        public void ejecutarProduccionO()
         {
             if (tipo.Equals("id"))
             {
                 pila.EliminarNodo();
                 pila.InsertarNodo(OO);
+            }
+            else
+            {
+                errorLexema = true;
+            }
+        }
+
+        public void ejecutarProduccionOO()
+        {
+            if (lexema.Equals("-"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(";");
+                pila.InsertarNodo("-");
+            }
+            else if (lexema.Equals("+"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(";");
+                pila.InsertarNodo("+");
+            }
+            else if (lexema.Equals("="))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(Z);
+            }
+            else
+            {
+                errorLexema = true;
+            }
+        }
+
+        public void ejecutarProduccionZ()
+        {
+            if (tipo.Equals("id") || tipo.Equals("n") || tipo.Equals("np") || tipo.Equals("ct")
+                || tipo.Equals("ac"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(X);
+
+            }
+            else if (lexema.Equals(verdadero) || lexema.Equals(falso))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(";");
+            }
+            else
+            {
+                errorLexema = true;
+            }
+        }
+
+        public void ejecutarProduccionX()
+        {
+            if (tipo.Equals("s"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(Z);
+
+            }
+            else if (lexema.Equals(";"))
+            {
+                pila.EliminarNodo();
+            }
+            else
+            {
+                errorLexema = true;
+            }
+        }
+
+        public void ejecutarProduccionK()
+        {
+            if (tipo.Equals("id"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(G);
+                pila.InsertarNodo(KK);
+                pila.InsertarNodo("s");
+            }
+            else if (lexema.Equals("!"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(GG);
+                pila.InsertarNodo(Y);
+            }
+            else
+            {
+                errorLexema = true;
+            }
+        }
+
+        public void ejecutarProduccionKK()
+        {
+            if (tipo.Equals("s"))
+            {
+                pila.EliminarNodo();
+            }
+            else 
+            {
+                pila.EliminarNodo();
+                ejecutarProduccionG();
+            }
+        }
+
+        public void ejecutarProduccionG()
+        {
+            if (tipo.Equals("id") || tipo.Equals("n"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(GG);
+            }
+            else
+            {
+                errorLexema = true;
+            }
+        }
+
+        public void ejecutarProduccionGG()
+        {
+            if (lexema.Equals("&"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(K);
+                pila.InsertarNodo("&");
+            }
+            else if (lexema.Equals("|"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(K);
+                pila.InsertarNodo("|");
+            }
+            else if (lexema.Equals(")"))
+            {
+                pila.EliminarNodo();
+                pila.EliminarNodo();
+            }
+            else
+            {
+                errorLexema = true;
+            }
+        }
+
+        public void ejecutarProduccionY()
+        {
+            if (lexema.Equals("!"))
+            {
+                pila.EliminarNodo();
+                pila.InsertarNodo(Y);
+            }
+            else if (lexema.Equals(verdadero) || lexema.Equals(falso))
+            {
+                pila.EliminarNodo();
             }
             else
             {

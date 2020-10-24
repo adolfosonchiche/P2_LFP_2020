@@ -25,7 +25,7 @@ namespace P1_LENGUAJES_FP
         protected static Boolean idToken = false;
         private string[] signosOperadores = new string[] {"+", "-", "++", "--", "<", ">",
            "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";", ",", "*"};
-        private AnalizadorSintactico sintactico;
+        private TablaTrasicionSintactico sintactico;
 
         /*metodo para instanciar algunas variables*/
         public void iniciarVaiables(PintaTokens pintar)
@@ -33,7 +33,8 @@ namespace P1_LENGUAJES_FP
             aceptacion = new EstadoAceptacion();
             noAceptacion = new EstadoNoAceptacion();
             this.pintaT = pintar;
-            sintactico = new AnalizadorSintactico();
+            sintactico = new TablaTrasicionSintactico();
+            sintactico.inicializarVariableSintactico();
         }
 
         /*metodo para obtener el movimineto en los estados 
@@ -156,7 +157,8 @@ namespace P1_LENGUAJES_FP
                 /*verificamos si el token es una palabra reservada para que no sea un error*/
                 for (int ctd = 0; ctd < pintaT.getTextoReservado().Count; ctd++)
                 {
-                    if (pintaT.getTextoReservado()[ctd].Equals(tokens))
+                    if (pintaT.getTextoReservado()[ctd].Equals(tokens) || tokens.Equals("principal") || tokens.Equals("leer")
+                        || tokens.Equals("escribir"))
                     {
                         errorToken = false;
                         cadCom = 10;
