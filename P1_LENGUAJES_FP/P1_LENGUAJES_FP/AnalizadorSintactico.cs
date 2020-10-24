@@ -212,6 +212,10 @@ namespace P1_LENGUAJES_FP
                 {
                     tablaSintactico.ejecutarProduccionY();
                 }
+                else
+                {
+
+                }
             }
         }
     }
