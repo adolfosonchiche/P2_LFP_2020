@@ -58,3 +58,4 @@ C:\Users\elektra\source\repos\P2_LFP_2020\P1_LENGUAJES_FP\P1_LENGUAJES_FP\obj\De
 C:\Users\elektra\source\repos\P2_LFP_2020\P1_LENGUAJES_FP\P1_LENGUAJES_FP\obj\Debug\netcoreapp3.1\P1_LENGUAJES_FP.dll
 C:\Users\elektra\source\repos\P2_LFP_2020\P1_LENGUAJES_FP\P1_LENGUAJES_FP\obj\Debug\netcoreapp3.1\P1_LENGUAJES_FP.pdb
 C:\Users\elektra\source\repos\P2_LFP_2020\P1_LENGUAJES_FP\P1_LENGUAJES_FP\obj\Debug\netcoreapp3.1\P1_LENGUAJES_FP.genruntimeconfig.cache
+C:\Users\elektra\source\repos\P2_LFP_2020\P1_LENGUAJES_FP\P1_LENGUAJES_FP\obj\Debug\netcoreapp3.1\P1_LENGUAJES_FP.Properties.Resources.resources

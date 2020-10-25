@@ -118,7 +118,8 @@ namespace P1_LENGUAJES_FP
         /* Metodo para preguntar al usuario y guardar su seleccion
          * si desea guradar el archivo antes de cerrarlo */
         public void mensajeGuardar(String texto, String mensaje,
-            RichTextBox txtIngresoCodigo, RichTextBox txtError, ListBox archivosProyecto)
+            RichTextBox txtIngresoCodigo, RichTextBox txtError, ListBox archivosProyecto, Automata automata,
+            PintaTokens pinta)
         {
             string message = "Deseas guardar el documento.!";
             string caption = texto;
@@ -133,6 +134,7 @@ namespace P1_LENGUAJES_FP
                 txtError.Clear();
                 mensaje = "";
                 pat = "";
+                automata.iniciarVaiables(pinta, txtError);
             }
             else if (result == DialogResult.No)
             {
@@ -140,6 +142,7 @@ namespace P1_LENGUAJES_FP
                 txtError.Clear();
                 mensaje = "";
                 pat = "";
+                automata.iniciarVaiables(pinta, txtError);
             }
 
             if (texto.Equals("Nuevo documento") && result != DialogResult.Cancel)

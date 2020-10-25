@@ -16,6 +16,7 @@ namespace P1_LENGUAJES_FP
                 || tok.Equals("8") || tok.Equals("9")) && (puntoEstadoB == 0 || puntoEstadoB == 1))
             {
                 errorToken = false;
+                tipoLexema = "n";
                 return 1;
             }
             else if (tok.Equals("."))
@@ -44,6 +45,7 @@ namespace P1_LENGUAJES_FP
             else if (idToken)
             {
                 errorToken = false;
+                tipoLexema = "id";
                 return 3;
             }
             else

@@ -68,5 +68,6 @@ namespace P1_LENGUAJES_FP
         public const String principal = "principal";
         public const String escribir = "escribir";
         public const String leer = "leer";
+        
     }
 }

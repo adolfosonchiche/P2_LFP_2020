@@ -35,11 +35,12 @@
             this.menuOpciones = new System.Windows.Forms.ToolStripMenuItem();
             this.itemAbrir = new System.Windows.Forms.ToolStripMenuItem();
             this.itemGuardarComo = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemSalir = new System.Windows.Forms.ToolStripMenuItem();
             this.itemProyecto = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemSalir = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGuardar = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCrearNuevo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCerrar = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemCompilar = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAyuda = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSalidaError = new System.Windows.Forms.RichTextBox();
             this.labeOutput = new System.Windows.Forms.Label();
@@ -48,6 +49,7 @@
             this.lboxArchivosProyecto = new System.Windows.Forms.ListBox();
             this.lblLogoProyecto = new System.Windows.Forms.Label();
             this.lblProyecto = new System.Windows.Forms.Label();
+            this.btnLimpiarSalida = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,6 +81,7 @@
             this.menuGuardar,
             this.menuCrearNuevo,
             this.menuCerrar,
+            this.itemCompilar,
             this.menuAyuda});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -91,8 +94,8 @@
             this.menuOpciones.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.itemAbrir,
             this.itemGuardarComo,
-            this.itemSalir,
-            this.itemProyecto});
+            this.itemProyecto,
+            this.itemSalir});
             this.menuOpciones.Name = "menuOpciones";
             this.menuOpciones.Size = new System.Drawing.Size(60, 20);
             this.menuOpciones.Text = "Archivo";
@@ -103,7 +106,7 @@
             this.itemAbrir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.itemAbrir.Name = "itemAbrir";
             this.itemAbrir.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.itemAbrir.Size = new System.Drawing.Size(190, 22);
+            this.itemAbrir.Size = new System.Drawing.Size(192, 22);
             this.itemAbrir.Text = "Abrir";
             this.itemAbrir.Click += new System.EventHandler(this.itemAbrir_Click);
             // 
@@ -113,23 +116,25 @@
             this.itemGuardarComo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.itemGuardarComo.Name = "itemGuardarComo";
             this.itemGuardarComo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.itemGuardarComo.Size = new System.Drawing.Size(190, 22);
+            this.itemGuardarComo.Size = new System.Drawing.Size(192, 22);
             this.itemGuardarComo.Text = "Guardar como";
             this.itemGuardarComo.Click += new System.EventHandler(this.itemGuardarComo_Click);
-            // 
-            // itemSalir
-            // 
-            this.itemSalir.Name = "itemSalir";
-            this.itemSalir.Size = new System.Drawing.Size(190, 22);
-            this.itemSalir.Text = "Salir";
-            this.itemSalir.Click += new System.EventHandler(this.itemSalir_Click);
             // 
             // itemProyecto
             // 
             this.itemProyecto.Name = "itemProyecto";
-            this.itemProyecto.Size = new System.Drawing.Size(190, 22);
+            this.itemProyecto.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.itemProyecto.Size = new System.Drawing.Size(192, 22);
             this.itemProyecto.Text = "Abrir Proyecto";
             this.itemProyecto.Click += new System.EventHandler(this.itemProyecto_Click);
+            // 
+            // itemSalir
+            // 
+            this.itemSalir.Name = "itemSalir";
+            this.itemSalir.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.itemSalir.Size = new System.Drawing.Size(192, 22);
+            this.itemSalir.Text = "Salir";
+            this.itemSalir.Click += new System.EventHandler(this.itemSalir_Click);
             // 
             // menuGuardar
             // 
@@ -151,6 +156,13 @@
             this.menuCerrar.Size = new System.Drawing.Size(51, 20);
             this.menuCerrar.Text = "Cerrar";
             this.menuCerrar.Click += new System.EventHandler(this.menuCerrar_Click);
+            // 
+            // itemCompilar
+            // 
+            this.itemCompilar.Name = "itemCompilar";
+            this.itemCompilar.Size = new System.Drawing.Size(68, 20);
+            this.itemCompilar.Text = "Compilar";
+            this.itemCompilar.Click += new System.EventHandler(this.itemCompilar_Click);
             // 
             // menuAyuda
             // 
@@ -225,11 +237,22 @@
             this.lblProyecto.TabIndex = 9;
             this.lblProyecto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // btnLimpiarSalida
+            // 
+            this.btnLimpiarSalida.Location = new System.Drawing.Point(182, 613);
+            this.btnLimpiarSalida.Name = "btnLimpiarSalida";
+            this.btnLimpiarSalida.Size = new System.Drawing.Size(105, 23);
+            this.btnLimpiarSalida.TabIndex = 10;
+            this.btnLimpiarSalida.Text = "Limpiar Salida";
+            this.btnLimpiarSalida.UseVisualStyleBackColor = true;
+            this.btnLimpiarSalida.Click += new System.EventHandler(this.btnLimpiarSalida_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1174, 657);
+            this.Controls.Add(this.btnLimpiarSalida);
             this.Controls.Add(this.lblProyecto);
             this.Controls.Add(this.lblLogoProyecto);
             this.Controls.Add(this.lboxArchivosProyecto);
@@ -271,6 +294,8 @@
         private System.Windows.Forms.ListBox lboxArchivosProyecto;
         private System.Windows.Forms.Label lblLogoProyecto;
         private System.Windows.Forms.Label lblProyecto;
+        private System.Windows.Forms.ToolStripMenuItem itemCompilar;
+        private System.Windows.Forms.Button btnLimpiarSalida;
     }
 }
 

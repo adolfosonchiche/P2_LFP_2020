@@ -22,35 +22,38 @@ namespace P1_LENGUAJES_FP
         protected string comentar = "";
         protected PintaTokens pintaT;
         protected String tok = "";
+        protected static String tipoLexema = "";
         protected static Boolean idToken = false;
         private string[] signosOperadores = new string[] {"+", "-", "++", "--", "<", ">",
            "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";", ",", "*"};
         private TablaTrasicionSintactico sintactico;
+        protected Boolean enviarLexema = true;
 
         /*metodo para instanciar algunas variables*/
-        public void iniciarVaiables(PintaTokens pintar)
+        public void iniciarVaiables(PintaTokens pintar, RichTextBox rtbErr)
         {
             aceptacion = new EstadoAceptacion();
             noAceptacion = new EstadoNoAceptacion();
             this.pintaT = pintar;
             sintactico = new TablaTrasicionSintactico();
-            sintactico.inicializarVariableSintactico();
+            sintactico.inicializarVariableSintactico(rtbErr);
         }
 
         /*metodo para obtener el movimineto en los estados 
          * e imprime si exite error en el token, verifica si ya 
          * se completo un token*/
-        public void obtenerEstado(KeyPressEventArgs e, RichTextBox rtbError, int fila, int columna)
+        public void obtenerEstado(/*KeyPressEventArgs e*/ char tokeni, RichTextBox rtbError, int fila, int columna)
         {
-            Char token = e.KeyChar;//obtenemos el token (caracter)
+            Char token = tokeni;//e.KeyChar;//obtenemos el token (caracter)
 
             /*verificamos si ya se termino el token o nos seguimo moviendo*/
             for (int cont = 0; cont < signosOperadores.Length; cont++)
             {
-                if(signosOperadores[cont].Equals(token.ToString()) || token.ToString().Equals(" ")
-                    || token.ToString().Equals("\r"))
+                if(signosOperadores[cont].Equals(token.ToString()) || token.ToString().Equals("") 
+                    || token.ToString().Equals(" ") || token.ToString().Equals("\r") || token.Equals('\n')
+                    || token.Equals(' '))
                 {
-                    moverToken = false;                 
+                    moverToken = false;
                     break;
                 }
                 else
@@ -152,12 +155,19 @@ namespace P1_LENGUAJES_FP
                 }
             }
             /*si ya no hay movimiento entonces el token esta completo y entramos aqui*/
-            else if (moverToken == false)
+            else if (!moverToken)
             {
                 /*verificamos si el token es una palabra reservada para que no sea un error*/
                 for (int ctd = 0; ctd < pintaT.getTextoReservado().Count; ctd++)
                 {
-                    if (pintaT.getTextoReservado()[ctd].Equals(tokens) || tokens.Equals("principal") || tokens.Equals("leer")
+                    if (pintaT.getTextoReservado()[ctd].Equals(tokens))
+                    {
+                        errorToken = false;
+                        cadCom = 10;
+                        tokens = pintaT.getTextoReservado()[ctd];
+                        tipoLexema = "reservada";
+                        break;
+                    } else if(tokens.Equals("principal") || tokens.Equals("leer")
                         || tokens.Equals("escribir"))
                     {
                         errorToken = false;
@@ -168,10 +178,11 @@ namespace P1_LENGUAJES_FP
                 if (token.Equals('\r') && tokens.Equals("") || tokens.Equals("") || tokens.Equals(""))
                 {
                     errorToken = false;
+                    enviarLexema = false;
                 }
 
                 /*si el token no finalizo en un estado de aceptacion imprimimos que es un error*/
-                if (errorToken == true)
+                if (errorToken)
                 {
                     rtbError.AppendText("Error: no se reconoce token: " + tokens + "       fila: " + fila 
                         + "   columna: " + (columna - tokens.Length) + " \n");
@@ -182,40 +193,61 @@ namespace P1_LENGUAJES_FP
                     {
                         tipoToken = 0;
                         pintaT.setNumeroEntero(tokens);
+                        tipoLexema = "n";
                     }
                     else if(puntoEstadoB == 1 && estado == 1)
                     {
                         pintaT.setNumeroDecimal(tokens);
+                        tipoLexema = "np";
                         tipoToken = 1;
                     }
                     else if (estado == 3 && tokens.Length == 1)
                     {
                         pintaT.setCaracter(tokens);
+                        tipoLexema = "ac";
                     }
                     else if (cadCom == 0)
                     {
                         pintaT.setCadenaTexto(tokens);
+                        tipoLexema = "ct";
                         tipoToken = 3;
-                    } else if((cadCom == 1 && estado != 0))
-                    {
-                        
+                    } else if((cadCom == 1 && estado != 0) || estado == 10)
+                    {                      
                         pintaT.setComentario(tokens);                      
                         tipoToken = 4;
-                    }
-                    else if (estado == 10)
-                    {
-                        pintaT.setComentario(tokens);
-                        tipoToken = 4;
+                        errorToken = true;
                     }
                 }
+
+                if (!errorToken && enviarLexema)
+                {
+                    sintactico.analizarLexema(tokens, tipoLexema, fila, (columna - tokens.Length + 1));
+                }
+
+                for (int cont = 0; cont < signosOperadores.Length; cont++)
+                {
+                    if (signosOperadores[cont].Equals(token.ToString()))
+                    {
+                        tokens = signosOperadores[cont];
+                        tipoLexema = "s";
+                        enviarLexema = true;
+                        errorToken = false;
+                        if (!errorToken && enviarLexema)
+                        {
+                            sintactico.analizarLexema(tokens, tipoLexema, fila, (columna - tokens.Length + 1));
+                        }
+                        break;
+                    }
+                }       
 
                 /*iniciamos el estado, y el token para ingresar uno nuevo*/
                 tokens = "";
                 estado = 0;   
                 puntoEstadoB = 0;
-                errorToken = false;
+                errorToken = true;
                 idToken = false;
-
+                tipoLexema = "";
+                enviarLexema = true;
             }            
         }
       
