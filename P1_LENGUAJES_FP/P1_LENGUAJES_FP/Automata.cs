@@ -25,7 +25,7 @@ namespace P1_LENGUAJES_FP
         protected static String tipoLexema = "";
         protected static Boolean idToken = false;
         private string[] signosOperadores = new string[] {"+", "-", "++", "--", "<", ">",
-           "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";", ",", "*"};
+           "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";", ",", "*", "{", "}"};
         private TablaTrasicionSintactico sintactico;
         protected Boolean enviarLexema = true;
 
@@ -44,7 +44,7 @@ namespace P1_LENGUAJES_FP
          * se completo un token*/
         public void obtenerEstado(/*KeyPressEventArgs e*/ char tokeni, RichTextBox rtbError, int fila, int columna)
         {
-            Char token = tokeni;//e.KeyChar;//obtenemos el token (caracter)
+            char token = tokeni;//e.KeyChar;//obtenemos el token (caracter)
 
             /*verificamos si ya se termino el token o nos seguimo moviendo*/
             for (int cont = 0; cont < signosOperadores.Length; cont++)
@@ -63,7 +63,7 @@ namespace P1_LENGUAJES_FP
             }
 
             /*sentencia para que se acepten token de tipo espacio y seguir moviendonos en estados*/
-            if((estado == 6 || estado == 7 || estado == 8 || estado == 10) && !token.Equals('\r'))
+            if((estado == 6 || estado == 7 || estado == 8 || estado == 10) && !token.Equals('\n'))
             {
                 moverToken = true;
             }
@@ -185,7 +185,7 @@ namespace P1_LENGUAJES_FP
                 if (errorToken)
                 {
                     rtbError.AppendText("Error: no se reconoce token: " + tokens + "       fila: " + fila 
-                        + "   columna: " + (columna - tokens.Length) + " \n");
+                        + "   columna: " + (columna - tokens.Length + 1) + " \n");
                 }
                 else //si finalizo en un estado de aceptacion guardamos el token para pintarlo
                 {
@@ -211,7 +211,8 @@ namespace P1_LENGUAJES_FP
                         pintaT.setCadenaTexto(tokens);
                         tipoLexema = "ct";
                         tipoToken = 3;
-                    } else if((cadCom == 1 && estado != 0) || estado == 10)
+                    }
+                    else if((cadCom == 1 && estado != 0) || estado == 10)
                     {                      
                         pintaT.setComentario(tokens);                      
                         tipoToken = 4;
@@ -249,6 +250,11 @@ namespace P1_LENGUAJES_FP
                 tipoLexema = "";
                 enviarLexema = true;
             }            
+        }
+
+        public Pila GetPilaActual()
+        {
+            return sintactico.getPila();
         }
       
     }

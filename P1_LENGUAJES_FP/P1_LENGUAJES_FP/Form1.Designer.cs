@@ -62,7 +62,6 @@
             this.txtIngresoCodigo.TabIndex = 0;
             this.txtIngresoCodigo.Text = "";
             this.txtIngresoCodigo.Click += new System.EventHandler(this.txtIngresoCodigo_Click);
-            this.txtIngresoCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtIngresoCodigo_KeyPress);
             // 
             // btnGuardarError
             // 

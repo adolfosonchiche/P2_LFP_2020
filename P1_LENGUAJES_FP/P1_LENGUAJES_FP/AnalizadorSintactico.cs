@@ -217,5 +217,10 @@ namespace P1_LENGUAJES_FP
                 }
             }
         }
+
+        public Pila getPila()
+        {
+            return pila;
+        }
     }
 }

@@ -110,9 +110,9 @@ namespace P1_LENGUAJES_FP
         }
 
         /*metodo que recibe y verifica las teclas (token) que el usuario presiona*/
-        private void txtIngresoCodigo_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            try 
+       
+        /*
+         try 
             {
                 obtenerPosicion();
                 Char token = e.KeyChar;
@@ -129,7 +129,8 @@ namespace P1_LENGUAJES_FP
             catch(Exception a) { 
                  MessageBox.Show(a.ToString());
             }
-        }
+         */
+
 
         /*metodo que indica la posicion cuando el usuario mueve el cursor con el mouse
          dando click en un lugar*/
@@ -177,6 +178,7 @@ namespace P1_LENGUAJES_FP
 
         private void itemCompilar_Click(object sender, EventArgs e)
         {
+            txtSalidaError.Clear();
             pinta = new PintaTokens();
             automata = new Automata();
             automata.iniciarVaiables(pinta, txtSalidaError);
@@ -209,7 +211,20 @@ namespace P1_LENGUAJES_FP
                 {
                     MessageBox.Show(a.ToString());
                 }
+            }
 
+            string datoErorres = txtSalidaError.Text;
+            if (automata.GetPilaActual().PilaVacia() && datoErorres.Equals(""))
+            {
+                txtSalidaError.Text = "EXITO, NO SE ENCONTRO ERRORES";
+            } else
+            {
+                txtSalidaError.AppendText("error: no se puede encontrar los simbolos finales (null expresion)\n");
+
+                for (int pil = 0; pil < automata.GetPilaActual().TamanoPila(); pil++)
+                {
+                    txtSalidaError.AppendText("error: falta datos de "+ automata.GetPilaActual().MostrarUltimoValorIngresado() +" \n");
+                }
             }
         }
 
