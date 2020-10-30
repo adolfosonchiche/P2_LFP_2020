@@ -19,6 +19,7 @@ namespace P1_LENGUAJES_FP
         private String mensaje = "";
         private static int line = 0;
         private static int column = 0;
+        private static Boolean errorSintactico = true;
 
         /*constructor inicializando variables*/
         public Form1()
@@ -217,6 +218,7 @@ namespace P1_LENGUAJES_FP
             if (automata.GetPilaActual().PilaVacia() && datoErorres.Equals(""))
             {
                 txtSalidaError.Text = "EXITO, NO SE ENCONTRO ERRORES";
+                errorSintactico = false;
             } else
             {
                 txtSalidaError.AppendText("error: no se puede encontrar los simbolos finales (null expresion)\n");
@@ -225,12 +227,68 @@ namespace P1_LENGUAJES_FP
                 {
                     txtSalidaError.AppendText("error: falta datos de "+ automata.GetPilaActual().MostrarUltimoValorIngresado() +" \n");
                 }
+                errorSintactico = true;
             }
         }
 
         private void btnLimpiarSalida_Click(object sender, EventArgs e)
         {
             txtSalidaError.Clear();
+        }
+
+        private void itemVerArbol_Click(object sender, EventArgs e)
+        {
+            if (!errorSintactico)
+            {
+                String datosArbol = automata.getDatosArbol();
+                datosArbol += "}";
+                System.IO.StreamWriter aliasArchivo = new System.IO.StreamWriter("..\\FiguraCAR");
+                aliasArchivo.WriteLine(datosArbol);
+                aliasArchivo.Close();
+
+                System.Diagnostics.Process.Start("..\\DIBUJAR.bat");
+
+                Form frmVentana = new Form();
+                frmVentana.Width = 1000;
+                frmVentana.Height = 600;
+                frmVentana.AutoScroll = true;
+                frmVentana.Text = "Arbol";
+                frmVentana.StartPosition = FormStartPosition.CenterScreen;
+                frmVentana.Show();
+
+                PictureBox picArbol = new PictureBox();
+                picArbol.Parent = frmVentana;
+                picArbol.Width = 990;
+                picArbol.Height = 565;
+                picArbol.SizeMode = PictureBoxSizeMode.Zoom;
+
+                System.IO.FileStream figuara = null;
+
+                try
+                {
+                    //figuara = new System.IO.FileStream("C:\\Users\\elektra\\Desktop\\nuevaFig.png",
+                    figuara = new System.IO.FileStream("..\\nuevaFig.png",
+                    System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                }
+                catch (Exception em)
+                {
+                    MessageBox.Show("error: \n" + em);
+                }
+
+                try
+                {
+                    picArbol.Image = System.Drawing.Bitmap.FromStream(figuara);
+                }
+                catch (Exception x)
+                {
+                    MessageBox.Show("error: \n" + x);
+                    return;
+                }
+
+                figuara.Close();
+                picArbol.Refresh();
+
+            }
         }
     }
 }

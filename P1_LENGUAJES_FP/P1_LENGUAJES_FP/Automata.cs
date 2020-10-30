@@ -25,9 +25,10 @@ namespace P1_LENGUAJES_FP
         protected static String tipoLexema = "";
         protected static Boolean idToken = false;
         private string[] signosOperadores = new string[] {"+", "-", "++", "--", "<", ">",
-           "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";", ",", "*", "{", "}"};
+           "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";", ",", "*"};
         private TablaTrasicionSintactico sintactico;
         protected Boolean enviarLexema = true;
+       // private string datosArbol = "";
 
         /*metodo para instanciar algunas variables*/
         public void iniciarVaiables(PintaTokens pintar, RichTextBox rtbErr)
@@ -35,8 +36,15 @@ namespace P1_LENGUAJES_FP
             aceptacion = new EstadoAceptacion();
             noAceptacion = new EstadoNoAceptacion();
             this.pintaT = pintar;
-            sintactico = new TablaTrasicionSintactico();
+            sintactico = new TablaTrasicionSintactico();         
+            /*datosArbol = "digraph Figura {\n"
+            + "Raiz-> E; \n"
+            + "E-> \"principal\"; \n"
+            + "E-> \"(\"; \n"
+            + "E-> \")\"; \n"
+            + "E-> \"{\"; \n";*/
             sintactico.inicializarVariableSintactico(rtbErr);
+            //+ "}";
         }
 
         /*metodo para obtener el movimineto en los estados 
@@ -257,5 +265,10 @@ namespace P1_LENGUAJES_FP
             return sintactico.getPila();
         }
       
+        public String getDatosArbol()
+        {
+            return sintactico.getArbol();
+        }
+
     }
 }

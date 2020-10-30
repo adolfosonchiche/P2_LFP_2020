@@ -1,0 +1,33 @@
+digraph Figura {
+Raiz-> E; 
+E-> "principal"; 
+E-> "("; 
+E-> ")"; 
+E-> "{"; 
+E-> "N"; 
+N-> "R"; 
+R-> "cadena"; 
+R-> "U"; 
+U-> "ID"; 
+U-> "UU"; 
+UU-> "="; 
+UU-> "texto"; 
+UU-> "UUU"; 
+UUU-> ";"; 
+N-> "N"; 
+N-> "D"; 
+D-> "MIENTRAS"; 
+D-> "("; 
+D-> "K"; 
+D-> ")"; 
+D-> "{"; 
+D-> "C"; 
+C-> "N"; 
+N-> "O"; 
+O-> "id"; 
+O-> "OO"; 
+OO-> "++"; 
+OO-> ";"; 
+N-> "}"; 
+N-> "}"; 
+}

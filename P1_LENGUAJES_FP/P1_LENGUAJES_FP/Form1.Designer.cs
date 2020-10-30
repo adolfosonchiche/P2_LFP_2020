@@ -41,6 +41,8 @@
             this.menuCrearNuevo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCerrar = new System.Windows.Forms.ToolStripMenuItem();
             this.itemCompilar = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemVerArbol = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemGuardarArbolSintactico = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAyuda = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSalidaError = new System.Windows.Forms.RichTextBox();
             this.labeOutput = new System.Windows.Forms.Label();
@@ -75,18 +77,21 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOpciones,
             this.menuGuardar,
             this.menuCrearNuevo,
             this.menuCerrar,
             this.itemCompilar,
+            this.itemVerArbol,
+            this.itemGuardarArbolSintactico,
             this.menuAyuda});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1174, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1174, 25);
             this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.Text = "menuBar";
             // 
             // menuOpciones
             // 
@@ -96,7 +101,7 @@
             this.itemProyecto,
             this.itemSalir});
             this.menuOpciones.Name = "menuOpciones";
-            this.menuOpciones.Size = new System.Drawing.Size(60, 20);
+            this.menuOpciones.Size = new System.Drawing.Size(70, 21);
             this.menuOpciones.Text = "Archivo";
             // 
             // itemAbrir
@@ -105,7 +110,7 @@
             this.itemAbrir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.itemAbrir.Name = "itemAbrir";
             this.itemAbrir.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.itemAbrir.Size = new System.Drawing.Size(192, 22);
+            this.itemAbrir.Size = new System.Drawing.Size(220, 22);
             this.itemAbrir.Text = "Abrir";
             this.itemAbrir.Click += new System.EventHandler(this.itemAbrir_Click);
             // 
@@ -115,7 +120,7 @@
             this.itemGuardarComo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.itemGuardarComo.Name = "itemGuardarComo";
             this.itemGuardarComo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.itemGuardarComo.Size = new System.Drawing.Size(192, 22);
+            this.itemGuardarComo.Size = new System.Drawing.Size(220, 22);
             this.itemGuardarComo.Text = "Guardar como";
             this.itemGuardarComo.Click += new System.EventHandler(this.itemGuardarComo_Click);
             // 
@@ -123,7 +128,7 @@
             // 
             this.itemProyecto.Name = "itemProyecto";
             this.itemProyecto.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.itemProyecto.Size = new System.Drawing.Size(192, 22);
+            this.itemProyecto.Size = new System.Drawing.Size(220, 22);
             this.itemProyecto.Text = "Abrir Proyecto";
             this.itemProyecto.Click += new System.EventHandler(this.itemProyecto_Click);
             // 
@@ -131,42 +136,55 @@
             // 
             this.itemSalir.Name = "itemSalir";
             this.itemSalir.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.itemSalir.Size = new System.Drawing.Size(192, 22);
+            this.itemSalir.Size = new System.Drawing.Size(220, 22);
             this.itemSalir.Text = "Salir";
             this.itemSalir.Click += new System.EventHandler(this.itemSalir_Click);
             // 
             // menuGuardar
             // 
             this.menuGuardar.Name = "menuGuardar";
-            this.menuGuardar.Size = new System.Drawing.Size(61, 20);
+            this.menuGuardar.Size = new System.Drawing.Size(74, 21);
             this.menuGuardar.Text = "Guardar";
             this.menuGuardar.Click += new System.EventHandler(this.menuGuardar_Click);
             // 
             // menuCrearNuevo
             // 
             this.menuCrearNuevo.Name = "menuCrearNuevo";
-            this.menuCrearNuevo.Size = new System.Drawing.Size(151, 20);
+            this.menuCrearNuevo.Size = new System.Drawing.Size(177, 21);
             this.menuCrearNuevo.Text = "Crear Nuevo Documento";
             this.menuCrearNuevo.Click += new System.EventHandler(this.menuCrearNuevo_Click);
             // 
             // menuCerrar
             // 
             this.menuCerrar.Name = "menuCerrar";
-            this.menuCerrar.Size = new System.Drawing.Size(51, 20);
+            this.menuCerrar.Size = new System.Drawing.Size(61, 21);
             this.menuCerrar.Text = "Cerrar";
             this.menuCerrar.Click += new System.EventHandler(this.menuCerrar_Click);
             // 
             // itemCompilar
             // 
             this.itemCompilar.Name = "itemCompilar";
-            this.itemCompilar.Size = new System.Drawing.Size(68, 20);
+            this.itemCompilar.Size = new System.Drawing.Size(78, 21);
             this.itemCompilar.Text = "Compilar";
             this.itemCompilar.Click += new System.EventHandler(this.itemCompilar_Click);
+            // 
+            // itemVerArbol
+            // 
+            this.itemVerArbol.Name = "itemVerArbol";
+            this.itemVerArbol.Size = new System.Drawing.Size(194, 21);
+            this.itemVerArbol.Text = "Ver Arbol Sintactico (crear)";
+            this.itemVerArbol.Click += new System.EventHandler(this.itemVerArbol_Click);
+            // 
+            // itemGuardarArbolSintactico
+            // 
+            this.itemGuardarArbolSintactico.Name = "itemGuardarArbolSintactico";
+            this.itemGuardarArbolSintactico.Size = new System.Drawing.Size(114, 21);
+            this.itemGuardarArbolSintactico.Text = "Guardar Arbol";
             // 
             // menuAyuda
             // 
             this.menuAyuda.Name = "menuAyuda";
-            this.menuAyuda.Size = new System.Drawing.Size(53, 20);
+            this.menuAyuda.Size = new System.Drawing.Size(61, 21);
             this.menuAyuda.Text = "Ayuda";
             // 
             // txtSalidaError
@@ -295,6 +313,9 @@
         private System.Windows.Forms.Label lblProyecto;
         private System.Windows.Forms.ToolStripMenuItem itemCompilar;
         private System.Windows.Forms.Button btnLimpiarSalida;
+        private System.Windows.Forms.ToolStripMenuItem itemVerArbol;
+        private System.Windows.Forms.ToolStripMenuItem itemGuardarArbol;
+        private System.Windows.Forms.ToolStripMenuItem itemGuardarArbolSintactico;
     }
 }
 

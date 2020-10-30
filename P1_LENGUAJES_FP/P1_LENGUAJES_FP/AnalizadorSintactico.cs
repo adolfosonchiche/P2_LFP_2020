@@ -17,6 +17,7 @@ namespace P1_LENGUAJES_FP
         protected String mensajeErrorLexema = "";
         TablaTrasicionSintactico tablaSintactico;
         protected static RichTextBox rtbError;
+        protected static String arbol;
 
 
         public void inicializarVariableSintactico(RichTextBox rtberr)
@@ -25,6 +26,12 @@ namespace P1_LENGUAJES_FP
             pila.InsertarNodo(E);
             tablaSintactico = new TablaTrasicionSintactico();
             rtbError = rtberr;
+            arbol = "digraph Figura {\n"
+            + "Raiz-> E; \n"
+            + "E-> \"principal\"; \n"
+            + "E-> \"(\"; \n"
+            + "E-> \")\"; \n"
+            + "E-> \"{\"; \n";           
         }
 
         public void analizarLexema(String lexema, String tipo, int fila, int columna)
@@ -213,7 +220,7 @@ namespace P1_LENGUAJES_FP
                 else
                 {
                     rtbError.AppendText("error en lexema: " + lexema + " de tipo " + tipo + " en fila: " + fila
-                        + " columna: " + columna + "\n");
+                        + " columna: " + columna + "\n" + "ya no se esperaba nada");
                 }
             }
         }
@@ -221,6 +228,11 @@ namespace P1_LENGUAJES_FP
         public Pila getPila()
         {
             return pila;
+        }
+
+        public string getArbol()
+        {
+            return arbol;
         }
     }
 }
