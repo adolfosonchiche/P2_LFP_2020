@@ -27,11 +27,10 @@ namespace P1_LENGUAJES_FP
             tablaSintactico = new TablaTrasicionSintactico();
             rtbError = rtberr;
             arbol = "digraph Figura {\n"
-            + "Raiz-> E; \n"
-            + "E-> \"principal\"; \n"
-            + "E-> \"(\"; \n"
-            + "E-> \")\"; \n"
-            + "E-> \"{\"; \n";           
+            + "E1-> \"2principal\"; \n"
+            + "E1-> \"3(\"; \n"
+            + "E1-> \"4)\"; \n"
+            + "E1-> \"5{\"; \n";           
         }
 
         public void analizarLexema(String lexema, String tipo, int fila, int columna)

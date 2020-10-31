@@ -10,7 +10,7 @@ namespace P1_LENGUAJES_FP
     {
 
         public const String E = "PE";
-        public const String N = "PN";
+        public const String N = "PN"; 
         public const String D = "PD";
         public const String R = "PR";
         public const String A = "PA";
@@ -68,6 +68,6 @@ namespace P1_LENGUAJES_FP
         public const String principal = "principal";
         public const String escribir = "escribir";
         public const String leer = "leer";
-        
+        protected static int numNodo = 6;
     }
 }
