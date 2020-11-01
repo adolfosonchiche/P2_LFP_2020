@@ -258,8 +258,8 @@ namespace P1_LENGUAJES_FP
 
                 PictureBox picArbol = new PictureBox();
                 picArbol.Parent = frmVentana;
-                picArbol.Width = 990;
-                picArbol.Height = 565;
+                picArbol.Width = 1000;
+                picArbol.Height = 600;
                 picArbol.SizeMode = PictureBoxSizeMode.Zoom;
 
                 System.IO.FileStream figuara = null;

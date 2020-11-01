@@ -8,10 +8,10 @@ namespace P1_LENGUAJES_FP
 {
     class TablaTrasicionSintactico : AnalizadorSintactico
     {
-        protected String numeroNodo = "";
+        
         public TablaTrasicionSintactico()
         {
-            numeroNodo = numNodo.ToString();
+            
         }
 
         public void ejecutarProduccionE(String lexema, String tipo, int fila, int columna)
@@ -19,7 +19,7 @@ namespace P1_LENGUAJES_FP
             try {
                 if (lexema.Equals(principal))
                 {
-                    arbol += "E1-> \"N6\"; \n";
+                    arbol += "E-> \"N2\"; \n";
                     pila.EliminarNodo();
                     pila.InsertarNodo(N);
                     pila.InsertarNodo("{");
@@ -42,17 +42,19 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals("}"))
             {
-                arbol += "N"+numeroNodo+ "-> \"}" + numeroNodo + "\"; \n";
-                numNodo++;
+               //numNodo++;
+                String nodoN = (numNodo-1).ToString();
+                arbol += "N"+nodoN+ "-> \"}" + (numNodo+2) + "\"; \n";
                 pila.EliminarNodo();
             }
             else if (lexema.Equals(desde) || lexema.Equals(hacer) || lexema.Equals(mientras)
                 || lexema.Equals(si))
             {
                 numNodo++;
-                String nuevoNodo = numNodo.ToString();
-                arbol += "N" + numeroNodo + "-> \"N" + nuevoNodo + "\"; \n";
-                arbol += "N" + nuevoNodo + "-> \"D" + nuevoNodo + "\"; \n";
+                String nuevoNodo = (numNodo+1).ToString();
+                String nodoN = (numNodo - 1).ToString();
+                arbol += "N" + nodoN + "-> \"D" + nuevoNodo + "\"; \n";
+                arbol += "N" + nodoN + "-> \"N" + nuevoNodo + "\"; \n";
                 numeroNodo = nuevoNodo;
                 pila.InsertarNodo(N);
                 ejecutarProduccionD(lexema, tipo, fila, columna);
@@ -61,13 +63,18 @@ namespace P1_LENGUAJES_FP
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir)
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                arbol += "N" + numeroNodo + "-> \"R" + numeroNodo + "\"; \n";
-                ejecutarProduccionR(lexema, tipo, fila, columna);
                 numNodo++;
+                String nuevoNodo = numNodo.ToString();
+                String nodoN = (numNodo - 1).ToString();
+                numeroNodo = nuevoNodo;
+                arbol += "N" + nodoN + "-> \"R" + numeroNodo + "\"; \n";
+                arbol += "N" + nodoN + "-> \"N" + (numNodo) + "\"; \n";
+                ejecutarProduccionR(lexema, tipo, fila, columna);
+                
             } 
             else if (tipo.Equals("id"))
             {
-                arbol += "N" + numeroNodo + "-> \"O" + numeroNodo + "\"; \n";
+                arbol += "N" + (numNodo-1) + "-> \"O" + numeroNodo + "\"; \n";
                 ejecutarProduccionO(lexema, tipo, fila, columna);
             }
             else
@@ -134,32 +141,32 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(entero))
             {
-                arbol += "R" + numeroNodo + "-> \"entero" + numeroNodo + "\"; \n";
-                arbol += "R" + numeroNodo + "-> \"L" + numeroNodo + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"entero" + nodoReservado + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"L" + nodoReservado + "\"; \n";
                 pila.InsertarNodo(L);
             }
             else if (lexema.Equals(numDecimal))
             {
-                arbol += "R" + numeroNodo + "-> \"decimal" + numeroNodo + "\"; \n";
-                arbol += "R" + numeroNodo + "-> \"M" + numeroNodo + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"decimal" + nodoReservado + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"M" + nodoReservado + "\"; \n";
                 pila.InsertarNodo(M);
             }
             else if (lexema.Equals(cadena))
             {
-                arbol += "R" + numeroNodo + "-> \"cadena" + numeroNodo + "\"; \n";
-                arbol += "R" + numeroNodo + "-> \"U" + numeroNodo + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"cadena" + nodoReservado + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"U" + nodoReservado + "\"; \n";
                 pila.InsertarNodo(U);
             }
             else if (lexema.Equals(booleano))
             {
-                arbol += "R" + numeroNodo + "-> \"booleano" + numeroNodo + "\"; \n";
-                arbol += "R" + numeroNodo + "-> \"Q" + numeroNodo + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"booleano" + nodoReservado + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"Q" + nodoReservado + "\"; \n";
                 pila.InsertarNodo(Q);
             }
             else if (lexema.Equals(caracter))
             {
-                arbol += "R" + numeroNodo + "-> \"caracter" + numeroNodo + "\"; \n";
-                arbol += "R" + numeroNodo + "-> \"P" + numeroNodo + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"caracter" + nodoReservado + "\"; \n";
+                arbol += "R" + numeroNodo + "-> \"P" + nodoReservado + "\"; \n";
                 pila.InsertarNodo(P);
             }
             else if (lexema.Equals(leer))
@@ -185,17 +192,20 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id"))
             {
-                arbol += "A" + numeroNodo + "-> \"ID" + numeroNodo + "\"; \n";
+                arbol += "A" + numeroNodo + "-> \"ID"  + nodoId + "\"; \n";
+                nodoId++;
                 arbol += "A" + numeroNodo + "-> \"=" + numeroNodo + "\"; \n";
                 arbol += "A" + numeroNodo + "-> \"numero" + numeroNodo + "\"; \n";
                 arbol += "A" + numeroNodo + "-> \"HASTA" + numeroNodo + "\"; \n";
-                arbol += "A" + numeroNodo + "-> \"ID1" + numeroNodo + "\"; \n";
-                arbol += "A" + numeroNodo + "-> \"signo" + numeroNodo + "\"; \n";
+                nodoId++;
+                arbol += "A" + numeroNodo + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "A" + numeroNodo + "-> \"signo" + nodoId + "\"; \n";
                 arbol += "A" + numeroNodo + "-> \"numero1" + numeroNodo + "\"; \n";
                 arbol += "A" + numeroNodo + "-> \"INCREMENTO" + numeroNodo + "\"; \n";
-                arbol += "A" + numeroNodo + "-> \"ID2" + numeroNodo + "\"; \n";
+                arbol += "A" + numeroNodo + "-> \"ID" + nodoId + "\"; \n";
                 arbol += "A" + numeroNodo + "-> \"numero3" + numeroNodo + "\"; \n";
                 arbol += "A" + numeroNodo + "-> \"{" + numeroNodo + "\"; \n";
+                nodoId++;
                 pila.EliminarNodo();
                 pila.InsertarNodo("{");
                 pila.InsertarNodo("n");
@@ -260,7 +270,10 @@ namespace P1_LENGUAJES_FP
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir) || tipo.Equals("id")
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                arbol += "C" + numeroNodo + "-> \"N" + numeroNodo + "\"; \n";
+                int num = numNodo;
+                String nuevoN = num.ToString();
+                arbol += "C" + numeroNodo + "-> \"N" + nuevoN + "\"; \n";
+                numNodo++;
                 ejecutarProduccionN(lexema, tipo, fila, columna);
             }
             else
@@ -284,7 +297,10 @@ namespace P1_LENGUAJES_FP
                 || lexema.Equals(cadena) || lexema.Equals(caracter) || lexema.Equals(escribir) || tipo.Equals("id")
                 || lexema.Equals(booleano) || lexema.Equals(leer))
             {
-                arbol += "F" + numeroNodo + "-> \"N" + numeroNodo + "\"; \n";
+                int num = numNodo;
+                String nuevoN = num.ToString();              
+                arbol += "F" + numeroNodo + "-> \"N" + nuevoN + "\"; \n";
+                numNodo++;
                 ejecutarProduccionN(lexema, tipo, fila, columna);
             }
             else
@@ -392,8 +408,9 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id"))
             {
-                arbol += "L" + numeroNodo + "-> \"ID" + numeroNodo + "\"; \n";
-                arbol += "L" + numeroNodo + "-> \"LL" + numeroNodo + "\"; \n";
+                arbol += "L" + nodoReservado + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "L" + nodoReservado + "-> \"LL" + nodoReservado + "\"; \n";
+                nodoId++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(LL);
             }
@@ -408,14 +425,14 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                arbol += "LL" + numeroNodo + "-> \"LLL" + numeroNodo + "\"; \n";
+                arbol += "LL" + nodoReservado + "-> \"LLL" + nodoReservado + "\"; \n";
                 ejecutarProduccionLLL(lexema, tipo, fila, columna);
             }
             else if (lexema.Equals("="))
             {
-                arbol += "LL" + numeroNodo + "-> \"=" + numeroNodo + "\"; \n";
-                arbol += "LL" + numeroNodo + "-> \"numero" + numeroNodo + "\"; \n";
-                arbol += "LL" + numeroNodo + "-> \"LLL" + numeroNodo + "\"; \n";
+                arbol += "LL" + nodoReservado + "-> \"=" + nodoReservado + "\"; \n";
+                arbol += "LL" + nodoReservado + "-> \"numero" + nodoReservado + "\"; \n";
+                arbol += "LL" + nodoReservado + "-> \"LLL" + nodoReservado + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(LLL);
                 pila.InsertarNodo("n");
@@ -431,15 +448,17 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(","))
             {
-                arbol += "LLL" + numeroNodo + "-> \"," + numeroNodo + "\"; \n";
-                arbol += "LLL" + numeroNodo + "-> \"L" + numeroNodo + "\"; \n";
+                arbol += "LLL" + nodoReservado + "-> \"," + nodoReservado + "\"; \n";
+                arbol += "LLL" + nodoReservado + "-> \"L" + (nodoReservado+1) + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(L);
             }
             else if (lexema.Equals(";"))
             {
-                arbol += "LLL" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
+                arbol += "LLL" + nodoReservado + "-> \";" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
+                nodoReservado++;
             }
             else
             {
@@ -452,8 +471,9 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id"))
             {
-                arbol += "M" + numeroNodo + "-> \"ID" + numeroNodo + "\"; \n";
-                arbol += "M" + numeroNodo + "-> \"MM" + numeroNodo + "\"; \n";
+                arbol += "M" + nodoReservado + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "M" + nodoReservado + "-> \"MM" + nodoReservado + "\"; \n";
+                nodoId++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(MM);
             }
@@ -468,14 +488,14 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                arbol += "MM" + numeroNodo + "-> \"MMM" + numeroNodo + "\"; \n";
+                arbol += "MM" + nodoReservado + "-> \"MMM" + nodoReservado + "\"; \n";
                 ejecutarProduccionMMM(lexema, tipo, fila, columna);
             }
             else if (lexema.Equals("="))
             {
-                arbol += "MM" + numeroNodo + "-> \"=" + numeroNodo + "\"; \n";
-                arbol += "MM" + numeroNodo + "-> \"numdecimal" + numeroNodo + "\"; \n";
-                arbol += "MM" + numeroNodo + "-> \"MMM" + numeroNodo + "\"; \n";
+                arbol += "MM" + nodoReservado + "-> \"=" + nodoReservado + "\"; \n";
+                arbol += "MM" + nodoReservado + "-> \"numdecimal" + nodoReservado + "\"; \n";
+                arbol += "MM" + nodoReservado + "-> \"MMM" + nodoReservado + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(MMM);
                 pila.InsertarNodo("np");
@@ -491,14 +511,16 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(","))
             {
-                arbol += "MMM" + numeroNodo + "-> \"," + numeroNodo + "\"; \n";
-                arbol += "MMM" + numeroNodo + "-> \"M" + numeroNodo + "\"; \n";
+                arbol += "MMM" + nodoReservado + "-> \"," + nodoReservado + "\"; \n";
+                arbol += "MMM" + nodoReservado + "-> \"M" + (nodoReservado + 1) + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(M);
             }
             else if (lexema.Equals(";"))
             {
-                arbol += "MMMM" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
+                arbol += "MMM" + nodoReservado + "-> \";" + numeroNodo + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
             }
             else
@@ -512,8 +534,9 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id"))
             {
-                arbol += "U" + numeroNodo + "-> \"ID" + numeroNodo + "\"; \n";
-                arbol += "U" + numeroNodo + "-> \"UU" + numeroNodo + "\"; \n";
+                arbol += "U" + nodoReservado + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "U" + nodoReservado + "-> \"UU" + nodoReservado + "\"; \n";
+                nodoId++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(UU);
             }
@@ -528,14 +551,14 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                arbol += "UU" + numeroNodo + "-> \"UUU" + numeroNodo + "\"; \n";
+                arbol += "UU" + nodoReservado + "-> \"UUU" + nodoReservado + "\"; \n";
                 ejecutarProduccionUUU(lexema, tipo, fila, columna);
             }
             else if (lexema.Equals("="))
             {
-                arbol += "UU" + numeroNodo + "-> \"=" + numeroNodo + "\"; \n";
-                arbol += "UU" + numeroNodo + "-> \"texto" + numeroNodo + "\"; \n";
-                arbol += "UU" + numeroNodo + "-> \"UUU" + numeroNodo + "\"; \n";
+                arbol += "UU" + nodoReservado + "-> \"=" + nodoReservado + "\"; \n";
+                arbol += "UU" + nodoReservado + "-> \"texto" + nodoReservado + "\"; \n";
+                arbol += "UU" + nodoReservado + "-> \"UUU" + nodoReservado + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(UUU);
                 pila.InsertarNodo("ct");
@@ -551,14 +574,16 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(","))
             {
-                arbol += "UUU-> \",\"; \n";
-                arbol += "UUU-> \"U\"; \n";
+                arbol += "UUU" + nodoReservado + "-> \"," + nodoReservado + "\"; \n";
+                arbol += "UUU" + nodoReservado + "-> \"U" + (nodoReservado + 1) + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(U);
             }
             else if (lexema.Equals(";"))
             {
-                arbol += "UUU-> \";\"; \n";
+                arbol += "UUU" + nodoReservado + "-> \";" + numeroNodo + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
             }
             else
@@ -572,8 +597,9 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id"))
             {
-                arbol += "P-> \"ID\"; \n";
-                arbol += "P-> \"PP\"; \n";
+                arbol += "P" + nodoReservado + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "P" + nodoReservado + "-> \"PP" + nodoReservado + "\"; \n";
+                nodoId++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(PP);
             }
@@ -588,14 +614,14 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                arbol += "PP-> \"PPP\"; \n";
+                arbol += "PP" + nodoReservado + "-> \"PPP" + nodoReservado + "\"; \n";
                 ejecutarProduccionPPP(lexema, tipo, fila, columna);
             }
             else if (lexema.Equals("="))
             {
-                arbol += "PP-> \"=\"; \n";
-                arbol += "PP-> \"char\"; \n";
-                arbol += "PP-> \"PPP\"; \n";
+                arbol += "PP" + nodoReservado + "-> \"=" + nodoReservado + "\"; \n";
+                arbol += "PP" + nodoReservado + "-> \"char" + nodoReservado + "\"; \n";
+                arbol += "PP" + nodoReservado + "-> \"PPP" + nodoReservado + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(PPP);
                 pila.InsertarNodo("ac");
@@ -611,14 +637,16 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(","))
             {
-                arbol += "PPP-> \",\"; \n";
-                arbol += "PPP-> \"P\"; \n";
+                arbol += "PPP" + nodoReservado + "-> \"," + nodoReservado + "\"; \n";
+                arbol += "PPP" + nodoReservado + "-> \"P" + (nodoReservado + 1) + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(P);
             }
             else if (lexema.Equals(";"))
             {
-                arbol += "PPP-> \";\"; \n";
+                arbol += "PPP" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
             }
             else
@@ -632,8 +660,9 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id"))
             {
-                arbol += "Q-> \"ID\"; \n";
-                arbol += "Q-> \"QQ\"; \n";
+                arbol += "Q" + nodoReservado + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "Q" + nodoReservado + "-> \"QQ" + nodoReservado + "\"; \n";
+                nodoId++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(QQ);
             }
@@ -648,14 +677,14 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(",") || lexema.Equals(";"))
             {
-                arbol += "QQ-> \"QQQ\"; \n";
+                arbol += "QQ" + nodoReservado + "-> \"QQQ" + nodoReservado + "\"; \n";
                 ejecutarProduccionQQQ(lexema, tipo, fila, columna);
             }
             else if (lexema.Equals("="))
             {
-                arbol += "QQ-> \"=\"; \n";
-                arbol += "QQ-> \"V\"; \n";
-                arbol += "QQ-> \"QQQ\"; \n";
+                arbol += "QQ" + nodoReservado + "-> \"=" + nodoReservado + "\"; \n";
+                arbol += "QQ" + nodoReservado + "-> \"V" + numeroNodo + "\"; \n";
+                arbol += "QQ" + nodoReservado + "-> \"QQQ" + nodoReservado + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(QQQ);
                 pila.InsertarNodo(V);
@@ -671,14 +700,16 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(","))
             {
-                arbol += "QQQ-> \",\"; \n";
-                arbol += "QQQ-> \"Q\"; \n";
+                arbol += "QQQ" + nodoReservado + "-> \"," + nodoReservado + "\"; \n";
+                arbol += "QQQ" + nodoReservado + "-> \"Q" + (nodoReservado + 1) + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(Q);
             }
             else if (lexema.Equals(";"))
             {
-                arbol += "QQQ-> \";\"; \n";
+                arbol += "QQQ" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
+                nodoReservado++;
                 pila.EliminarNodo();
             }
             else
@@ -692,7 +723,7 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(verdadero) || lexema.Equals(falso))
             {
-                arbol += "V-> \""+ lexema+"\"; \n";
+                arbol += "V" + numeroNodo + "-> \"" + lexema + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
             }
             else
@@ -706,10 +737,11 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals("("))
             {
-                arbol += "S-> \"(\"; \n";
-                arbol += "S-> \"ID\"; \n";
-                arbol += "S-> \")\"; \n";
-                arbol += "S-> \";\"; \n";
+                arbol += "S" + numeroNodo + "-> \"(" + numeroNodo + "\"; \n";
+                arbol += "S" + numeroNodo + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "S" + numeroNodo + "-> \")" + numeroNodo + "\"; \n";
+                arbol += "S" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
+                nodoId++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(";");
                 pila.InsertarNodo(")");
@@ -726,11 +758,11 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals("("))
             {
-                arbol += "T-> \"(\"; \n";
-                arbol += "T-> \"TT\"; \n";
-                arbol += "T-> \"W\"; \n";
-                arbol += "T-> \")\"; \n";
-                arbol += "T-> \";\"; \n";
+                arbol += "T" + numeroNodo + "-> \"(" + numeroNodo + "\"; \n";
+                arbol += "T" + numeroNodo + "-> \"TT" + numeroNodo + "\"; \n";
+                arbol += "T" + numeroNodo + "-> \"W" + numeroNodo + "\"; \n";
+                arbol += "T" + numeroNodo + "-> \")" + numeroNodo + "\"; \n";
+                arbol += "T" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(";");
                 pila.InsertarNodo(")");
@@ -748,7 +780,7 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id") || tipo.Equals("n") || tipo.Equals("ct"))
             {
-                arbol += "TT-> \""+lexema+"\"; \n";
+                arbol += "TT" + numeroNodo + "-> \"" + lexema + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
             }
             else
@@ -762,14 +794,14 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals(")"))
             {
-                arbol += "W-> \")\"; \n";
+                arbol += "W" + numeroNodo + "-> \")" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.EliminarNodo();
             }
             else if (lexema.Equals("+"))
             {
-                arbol += "W-> \"+\"; \n";
-                arbol += "W-> \"TT\"; \n";
+                arbol += "W" + numeroNodo + "-> \"+" + numeroNodo + "\"; \n";
+                arbol += "W" + numeroNodo + "-> \"TT" + numeroNodo + "\"; \n";
                 pila.InsertarNodo(TT);
             }
             else
@@ -783,9 +815,9 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id"))
             {
-                arbol += "O-> \"ID\"; \n";
-                arbol += "O-> \"OO\"; \n";
-                pila.EliminarNodo();
+                arbol += "O" + numeroNodo + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "O" + numeroNodo + "-> \"OO" + numeroNodo + "\"; \n";
+                nodoId++;
                 pila.InsertarNodo(OO);
             }
             else
@@ -799,24 +831,24 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals("-"))
             {
-                arbol += "OO-> \"--\"; \n";
-                arbol += "OO-> \";\"; \n";
+                arbol += "OO" + numeroNodo + "-> \"--" + numeroNodo + "\"; \n";
+                arbol += "OO" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(";");
                 pila.InsertarNodo("-");
             }
             else if (lexema.Equals("+"))
             {
-                arbol += "OO-> \"++\"; \n";
-                arbol += "OO-> \";\"; \n";
+                arbol += "OO" + numeroNodo + "-> \"++" + numeroNodo + "\"; \n";
+                arbol += "OO" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(";");
                 pila.InsertarNodo("+");
             }
             else if (lexema.Equals("="))
             {
-                arbol += "OO-> \"=\"; \n";
-                arbol += "OO-> \"Z\"; \n";
+                arbol += "OO" + numeroNodo + "-> \"=" + numeroNodo + "\"; \n";
+                arbol += "OO" + numeroNodo + "-> \"Z" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(Z);
             }
@@ -832,16 +864,16 @@ namespace P1_LENGUAJES_FP
             if (tipo.Equals("id") || tipo.Equals("n") || tipo.Equals("np") || tipo.Equals("ct")
                 || tipo.Equals("ac"))
             {
-                arbol += "Z-> \""+lexema+"\"; \n";
-                arbol += "Z-> \"X\"; \n";
+                arbol += "Z" + numeroNodo + "-> \"" + tipo + numeroNodo + "\"; \n";
+                arbol += "Z" + numeroNodo + "-> \"X" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(X);
 
             }
             else if (lexema.Equals(verdadero) || lexema.Equals(falso))
             {
-                arbol += "Z-> \""+lexema+"\"; \n";
-                arbol += "Z-> \";\"; \n";
+                arbol += "Z" + numeroNodo + "-> \"" + lexema + numeroNodo + "\"; \n";
+                arbol += "Z" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(";");
             }
@@ -854,18 +886,18 @@ namespace P1_LENGUAJES_FP
 
         public void ejecutarProduccionX(String lexema, String tipo, int fila, int columna)
         {
-            if (tipo.Equals("s"))
+            if (lexema.Equals(";"))
+                {
+                    arbol += "X" + numeroNodo + "-> \";" + numeroNodo + "\"; \n";
+                    pila.EliminarNodo();
+                } 
+            else if (tipo.Equals("s"))
             {
-                arbol += "X-> \""+lexema+"\"; \n";
-                arbol += "X-> \"Z\"; \n";
+                arbol += "X" + numeroNodo + "-> \"" + lexema + numeroNodo + "\"; \n";
+                arbol += "X" + numeroNodo + "-> \"Z" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(Z);
 
-            }
-            else if (lexema.Equals(";"))
-            {
-                arbol += "X-> \";\"; \n";
-                pila.EliminarNodo();
             }
             else
             {
@@ -878,10 +910,11 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id"))
             {
-                arbol += "K" + numeroNodo + "-> \"ID" + numeroNodo + "\"; \n";
-                arbol += "K" + numeroNodo + "-> \"signo1" + numeroNodo + "\"; \n";
+                arbol += "K" + numeroNodo + "-> \"ID" + nodoId + "\"; \n";
+                arbol += "K" + numeroNodo + "-> \"signo0" + nodoId + "\"; \n";
                 arbol += "K" + numeroNodo + "-> \"KK" + numeroNodo + "\"; \n";
                 arbol += "K" + numeroNodo + "-> \"G" + numeroNodo + "\"; \n";
+                nodoId++;
                 pila.EliminarNodo();
                 pila.InsertarNodo(G);
                 pila.InsertarNodo(KK);
@@ -912,7 +945,7 @@ namespace P1_LENGUAJES_FP
             }
             else 
             {
-                arbol += "KK" + numeroNodo + "-> \"G" + numeroNodo + "\"; \n";
+                //arbol += "KK" + numeroNodo + "-> \"G" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 ejecutarProduccionG(lexema, tipo, fila, columna);
             }
@@ -922,7 +955,7 @@ namespace P1_LENGUAJES_FP
         {
             if (tipo.Equals("id") || tipo.Equals("n"))
             {
-                arbol += "G" + numeroNodo + "-> \"" + lexema+ "" + numeroNodo + "\"; \n";
+                arbol += "G" + numeroNodo + "-> \"" + lexema + numeroNodo + "\"; \n";
                 arbol += "G" + numeroNodo + "-> \"GG" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(GG);
@@ -954,7 +987,7 @@ namespace P1_LENGUAJES_FP
             }
             else if (lexema.Equals(")"))
             {
-                arbol += "GG" + numeroNodo + "-> \")" + numeroNodo + "\"; \n";
+                //arbol += "GG" + numeroNodo + "-> \")" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.EliminarNodo();
             }
@@ -969,19 +1002,19 @@ namespace P1_LENGUAJES_FP
         {
             if (lexema.Equals("!"))
             {
-                arbol += "Y-> \"!\"; \n";
-                arbol += "Y-> \"Y\"; \n";
+                arbol += "Y" + numeroNodo + "-> \"!" + numeroNodo + "\"; \n";
+                arbol += "Y" + numeroNodo + "-> \"Y" + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
                 pila.InsertarNodo(Y);
             }
             else if (lexema.Equals(verdadero) || lexema.Equals(falso))
             {
-                arbol += "Y-> \""+lexema+"\"; \n";
+                arbol += "Y" + numeroNodo + "-> \"" + lexema + numeroNodo + "\"; \n";
                 pila.EliminarNodo();
             }
             else
             {
-                errorLexema = true;
+                errorLexema = true;                                                                                    
                 imprimirError(lexema, tipo, fila, columna);
             }
         }

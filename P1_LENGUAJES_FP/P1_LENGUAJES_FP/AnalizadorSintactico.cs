@@ -18,6 +18,7 @@ namespace P1_LENGUAJES_FP
         TablaTrasicionSintactico tablaSintactico;
         protected static RichTextBox rtbError;
         protected static String arbol;
+        protected String numeroNodo = "";
 
 
         public void inicializarVariableSintactico(RichTextBox rtberr)
@@ -26,11 +27,14 @@ namespace P1_LENGUAJES_FP
             pila.InsertarNodo(E);
             tablaSintactico = new TablaTrasicionSintactico();
             rtbError = rtberr;
+            numNodo = 2;
+            nodoId = 1;
+            nodoReservado = 1;
             arbol = "digraph Figura {\n"
-            + "E1-> \"2principal\"; \n"
-            + "E1-> \"3(\"; \n"
-            + "E1-> \"4)\"; \n"
-            + "E1-> \"5{\"; \n";           
+            + "E-> \"principal\"; \n"
+            + "E-> \"(1\"; \n"
+            + "E-> \")1\"; \n"
+            + "E-> \"{1\"; \n";           
         }
 
         public void analizarLexema(String lexema, String tipo, int fila, int columna)
@@ -40,6 +44,7 @@ namespace P1_LENGUAJES_FP
             this.fila = fila;
             this.columna = columna;
             ultimoValor = "";
+            numeroNodo = numNodo.ToString();
 
             if (!pila.PilaVacia())
             {

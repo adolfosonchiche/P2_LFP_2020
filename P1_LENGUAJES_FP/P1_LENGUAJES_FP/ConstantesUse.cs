@@ -68,6 +68,8 @@ namespace P1_LENGUAJES_FP
         public const String principal = "principal";
         public const String escribir = "escribir";
         public const String leer = "leer";
-        protected static int numNodo = 6;
+        protected static int numNodo = 2;
+        protected static int nodoId = 1;
+        protected static int nodoReservado = 1;
     }
 }
