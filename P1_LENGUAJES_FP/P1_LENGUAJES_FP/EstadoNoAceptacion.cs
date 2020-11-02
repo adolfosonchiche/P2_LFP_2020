@@ -34,6 +34,7 @@ namespace P1_LENGUAJES_FP
                 if (tok.Equals("_"))
                 {
                     idToken = true;
+                   // tipoLexema = "id";
                 }
                 errorToken = false;
                 return 3;

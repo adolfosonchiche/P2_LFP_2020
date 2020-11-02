@@ -29,6 +29,7 @@ namespace P1_LENGUAJES_FP
             rtbError = rtberr;
             numNodo = 2;
             nodoId = 1;
+            useSino = 1;
             nodoReservado = 1;
             arbol = "digraph Figura {\n"
             + "E-> \"principal\"; \n"

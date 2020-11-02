@@ -71,5 +71,6 @@ namespace P1_LENGUAJES_FP
         protected static int numNodo = 2;
         protected static int nodoId = 1;
         protected static int nodoReservado = 1;
+        protected static int useSino = 1;
     }
 }

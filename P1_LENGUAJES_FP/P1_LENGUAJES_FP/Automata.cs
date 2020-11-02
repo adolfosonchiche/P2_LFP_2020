@@ -15,7 +15,7 @@ namespace P1_LENGUAJES_FP
         protected static int estado = 0;
         protected static int puntoEstadoB = 0;
         protected static int tipoToken = 0;
-        protected static int cadCom = 0;
+        protected static int cadCom = 2;
         protected Boolean moverToken = false;
         protected static Boolean errorToken = false;
         protected string tokens = "";
@@ -25,7 +25,7 @@ namespace P1_LENGUAJES_FP
         protected static String tipoLexema = "";
         protected static Boolean idToken = false;
         private string[] signosOperadores = new string[] {"+", "-", "++", "--", "<", ">",
-           "<=", ">=", "==", "!=", "!", "||", "&&", "(", ")", "=", ";", ",", "*"};
+           "<=", ">=", "==", "!=", "!", "|", "&", "(", ")", "=", ";", ",", "*"};
         private TablaTrasicionSintactico sintactico;
         protected Boolean enviarLexema = true;
        // private string datosArbol = "";
@@ -257,6 +257,7 @@ namespace P1_LENGUAJES_FP
                 idToken = false;
                 tipoLexema = "";
                 enviarLexema = true;
+                cadCom = 2;
             }            
         }
 
