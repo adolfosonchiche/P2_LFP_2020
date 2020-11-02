@@ -20,6 +20,8 @@ namespace P1_LENGUAJES_FP
         private static int line = 0;
         private static int column = 0;
         private static Boolean errorSintactico = true;
+        System.IO.FileStream figuara = null;
+        protected static Boolean figuaraCreada = false;
 
         /*constructor inicializando variables*/
         public Form1()
@@ -111,7 +113,7 @@ namespace P1_LENGUAJES_FP
         }
 
         /*metodo que recibe y verifica las teclas (token) que el usuario presiona*/
-       
+
         /*
          try 
             {
@@ -184,50 +186,58 @@ namespace P1_LENGUAJES_FP
             automata = new Automata();
             automata.iniciarVaiables(pinta, txtSalidaError);
             obtenerTextoRichText();
+            figuaraCreada = false;
             char[] token = mensaje.ToCharArray();
             column = 0;
             line = 0;
-            foreach (char tok in token) {
-
-                try
+            try
+            {
+                foreach (char tok in token)
                 {
                     automata.obtenerEstado(tok, txtSalidaError, line + 1, column);
-
-                    pinta.pintarTextoReservada(txtIngresoCodigo);
+                    /*pinta.pintarTextoReservada(txtIngresoCodigo);
                     pinta.pintarSignosOperadores(txtIngresoCodigo);
                     pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getCadenaTexto(), 3);
                     pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getNumeroEntero(), 0);
                     pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getNumeroDecimal(), 1);
-                    pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getComentario(), 4);
-
-                    if (tok.Equals('\n')){
+                    pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getComentario(), 4);*/
+                    if (tok.Equals('\n'))
+                    {
                         line++;
                         column = 0;
-                    } else
+                    }
+                    else
                     {
                         column++;
                     }
                 }
-                catch (Exception a)
+                pinta.pintarTextoReservada(txtIngresoCodigo);
+                pinta.pintarSignosOperadores(txtIngresoCodigo);
+                pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getCadenaTexto(), 3);
+                pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getNumeroEntero(), 0);
+                pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getNumeroDecimal(), 1);
+                pinta.pintarTokensCompleto(txtIngresoCodigo, pinta.getComentario(), 4);
+
+                string datoErorres = txtSalidaError.Text;
+                if (automata.GetPilaActual().PilaVacia() && datoErorres.Equals(""))
                 {
-                    MessageBox.Show(a.ToString());
+                    txtSalidaError.Text = "EXITO, NO SE ENCONTRO ERRORES";
+                    errorSintactico = false;
+                }
+                else
+                {
+                    txtSalidaError.AppendText("error: no se puede encontrar los simbolos finales (null expresion)\n");
+
+                    for (int pil = 0; pil < automata.GetPilaActual().TamanoPila(); pil++)
+                    {
+                        txtSalidaError.AppendText("error: falta datos de " + automata.GetPilaActual().MostrarUltimoValorIngresado() + " \n");
+                    }
+                    errorSintactico = true;
                 }
             }
-
-            string datoErorres = txtSalidaError.Text;
-            if (automata.GetPilaActual().PilaVacia() && datoErorres.Equals(""))
+            catch (Exception a)
             {
-                txtSalidaError.Text = "EXITO, NO SE ENCONTRO ERRORES";
-                errorSintactico = false;
-            } else
-            {
-                txtSalidaError.AppendText("error: no se puede encontrar los simbolos finales (null expresion)\n");
-
-                for (int pil = 0; pil < automata.GetPilaActual().TamanoPila(); pil++)
-                {
-                    txtSalidaError.AppendText("error: falta datos de "+ automata.GetPilaActual().MostrarUltimoValorIngresado() +" \n");
-                }
-                errorSintactico = true;
+                MessageBox.Show(a.ToString());
             }
         }
 
@@ -261,12 +271,12 @@ namespace P1_LENGUAJES_FP
                 picArbol.Width = 1000;
                 picArbol.Height = 600;
                 picArbol.SizeMode = PictureBoxSizeMode.Zoom;
-
-                System.IO.FileStream figuara = null;
+                //System.IO.FileStream figuara = null;
 
                 try
                 {
                     //figuara = new System.IO.FileStream("C:\\Users\\elektra\\Desktop\\nuevaFig.png",
+                    figuaraCreada = true;
                     figuara = new System.IO.FileStream("..\\nuevaFig.png",
                     System.IO.FileMode.Open, System.IO.FileAccess.Read);
                 }
@@ -289,6 +299,19 @@ namespace P1_LENGUAJES_FP
                 picArbol.Refresh();
 
             }
+            else
+            {
+                MessageBox.Show("error: \n primero debe de compilar un programa y que\nno existan errores de compilacion para " + "\n poder generar el arbol sintactico.");
+            }
+        }
+
+        private void itemGuardarArbolSintactico_Click(object sender, EventArgs e)
+        {
+            if (figuaraCreada)
+            {
+               
+            }
+
         }
     }
 }

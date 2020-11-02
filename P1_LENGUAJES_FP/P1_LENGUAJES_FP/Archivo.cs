@@ -7,6 +7,10 @@ using Microsoft.Win32;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Encoder = System.Drawing.Imaging.Encoder;
+
 namespace P1_LENGUAJES_FP
 {
     class Archivo
@@ -302,6 +306,8 @@ namespace P1_LENGUAJES_FP
                 MessageBox.Show("Error en leer el archivo.\n", "Abrir archivo");
             }
         }
+
+        
     }
     
 }

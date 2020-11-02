@@ -180,6 +180,7 @@
             this.itemGuardarArbolSintactico.Name = "itemGuardarArbolSintactico";
             this.itemGuardarArbolSintactico.Size = new System.Drawing.Size(114, 21);
             this.itemGuardarArbolSintactico.Text = "Guardar Arbol";
+            this.itemGuardarArbolSintactico.Click += new System.EventHandler(this.itemGuardarArbolSintactico_Click);
             // 
             // menuAyuda
             // 
