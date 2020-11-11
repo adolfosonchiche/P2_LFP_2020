@@ -31,6 +31,7 @@ namespace P1_LENGUAJES_FP
             nodoId = 1;
             useSino = 1;
             nodoReservado = 1;
+            useSentencia = 1;
             arbol = "digraph Figura {\n"
             + "E-> \"principal\"; \n"
             + "E-> \"(1\"; \n"
